@@ -1,0 +1,17 @@
+{
+ "name": "Mayday Job Reports",
+ "short_name": "Mayday Reports",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#e9ecf1",
+ "theme_color": "#1a1d21",
+ "icons": [
+  {
+   "src": "icon.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  }
+ ]
+}
