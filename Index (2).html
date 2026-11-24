@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mayday Maintenance – Job Report Sheet</title>
+<style>
+  :root{--ink:#1a1d21;--muted:#5b6470;--line:#c9ced6;--soft:#f3f5f8;--accent:#c8102e;--accent-ink:#fff;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#e9ecf1;font-size:15px;line-height:1.35}
+  .sheet{max-width:820px;margin:0 auto;background:#fff;padding:18px 16px 28px}
+  header{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--accent);padding-bottom:8px;margin-bottom:12px;gap:10px}
+  header h1{margin:0;font-size:22px;letter-spacing:.3px}
+  header .co{font-weight:700;color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:1px}
+  header .ref{font-size:12px;color:var(--muted);text-align:right}
+  section{border:1px solid var(--line);border-radius:6px;margin-bottom:12px;overflow:hidden;break-inside:avoid}
+  section>h2{margin:0;background:var(--soft);font-size:13px;text-transform:uppercase;letter-spacing:.8px;padding:6px 10px;border-bottom:1px solid var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .f{padding:6px 10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);min-width:0}
+  .f.full{grid-column:1/-1;border-right:none}
+  .grid>.f:nth-child(2n){border-right:none}
+  .grid.three>.f{border-right:1px solid var(--line)}
+  .grid.three>.f:nth-child(3n){border-right:none}
+  label,.lbl{display:block;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+  input[type=text],input[type=date],input[type=time],input[type=number],input[type=email],select,textarea{width:100%;border:none;border-bottom:1px dashed #d6dae0;background:transparent;font:inherit;color:inherit;padding:4px 0;min-height:28px;border-radius:0}
+  input:focus,select:focus,textarea:focus{outline:none;border-bottom:1px solid var(--accent);background:#fff8f8}
+  textarea{resize:vertical;min-height:70px;border:1px dashed #d6dae0;padding:6px;border-radius:4px}
+  textarea.tall{min-height:110px}
+  .checks{display:flex;flex-wrap:wrap;gap:6px 14px;padding-top:2px}
+  .checks label{display:flex;align-items:center;gap:5px;text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink);font-size:14px;margin:0}
+  .checks input{width:18px;height:18px;accent-color:var(--accent)}
+  table.parts{width:100%;border-collapse:collapse}
+  table.parts th{font-size:11px;text-transform:uppercase;color:var(--muted);text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);font-weight:600}
+  table.parts td{border-bottom:1px solid var(--line);padding:0 8px}
+  table.parts td+td,table.parts th+th{border-left:1px solid var(--line)}
+  table.parts input{border-bottom:none}
+  .photos{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px}
+  .ph{display:flex;flex-direction:column;gap:4px}
+  .ph .num{font-size:11px;font-weight:700;color:var(--muted)}
+  .box{position:relative;aspect-ratio:1/1;border:1.5px dashed #9aa3ae;border-radius:4px;background:var(--soft);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;text-align:center;color:var(--muted);font-size:12px}
+  .box img{width:100%;height:100%;object-fit:cover;display:block}
+  .box input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .box .rm{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:14px;line-height:24px;padding:0;z-index:2;display:none;cursor:pointer}
+  .box.has .rm{display:block}
+  .box.has{border-style:solid}
+  .ph textarea{min-height:52px;font-size:13px}
+  .sig{height:90px;border:1px dashed #9aa3ae;border-radius:4px;background:#fff;position:relative;touch-action:none}
+  .sig canvas{width:100%;height:100%;display:block}
+  .sig .clr{position:absolute;right:4px;bottom:4px;font-size:11px;border:1px solid var(--line);background:#fff;border-radius:4px;padding:2px 6px;cursor:pointer}
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:7;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:10px 10px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid var(--line)}
+  body{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+  .endbtns{padding:6px 0 20px}
+  .endbtns button{display:block;width:100%;font:inherit;font-weight:700;font-size:17px;border:none;border-radius:8px;padding:15px;background:var(--accent);color:#fff;cursor:pointer}
+  .endbtns button:disabled{opacity:.6}
+  .bar button{font:inherit;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:6px;padding:9px 14px;cursor:pointer}
+  .bar button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .note{font-size:12px;color:var(--muted);text-align:center;margin:6px 0 0;width:100%}
+  .team{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 10px;padding:4px 0}
+  .team label{display:flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink);font-size:14px;margin:0;padding:3px 0}
+  .team input{width:18px;height:18px;accent-color:var(--accent);flex:none}
+  .tcount{color:var(--accent);text-transform:none;letter-spacing:0}
+  input.other{margin-top:4px}
+  @media (max-width:560px){.team{grid-template-columns:repeat(2,1fr)}}
+  @media print{.team{grid-template-columns:repeat(5,1fr)} .team.any label:not(.on){display:none} input.other:placeholder-shown{display:none}}
+  .vids{padding:10px}
+  .vid{border:1px solid var(--line);border-radius:6px;padding:8px;margin-bottom:8px}
+  .vrow{display:flex;gap:8px;align-items:center;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:6px}
+  .vrow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+  .vrow a,.vrow button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:5px;padding:4px 9px;color:var(--ink);text-decoration:none;cursor:pointer;flex:none}
+  .vid textarea{min-height:44px;font-size:13px}
+  .vadd{display:block;position:relative;text-align:center;border:1.5px dashed #9aa3ae;border-radius:6px;padding:12px;font-weight:700;color:var(--muted);background:var(--soft);cursor:pointer;text-transform:none;letter-spacing:0;font-size:14px}
+  .vadd input{position:absolute;inset:0;opacity:0;cursor:pointer}
+  .vnote{font-size:12px;color:var(--muted);margin:6px 0 0}
+  body.ro .vadd,body.ro .vnote,body.ro .vrm{display:none!important}
+  .vbtns{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+  .listbar{position:fixed;left:0;right:0;bottom:0;display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px;background:#fff;border-top:1px solid var(--line);z-index:6}
+  .listbar span{font-weight:700;font-size:14px;margin-right:4px}
+  .listbar button{font:inherit;font-weight:600;font-size:14px;border:1px solid var(--line);background:#fff;border-radius:6px;padding:8px 12px;cursor:pointer}
+  .listbar button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .card .tick{display:none;width:20px;height:20px;border:2px solid #9aa3ae;border-radius:4px;flex:none;margin-right:8px}
+  #listView.selecting .card .tick{display:inline-block}
+  #listView.selecting .card{display:flex;align-items:flex-start}
+  #listView.selecting .card .cbody{flex:1;min-width:0}
+  .card.sel{background:#fff5f6;border-color:var(--accent)}
+  .card.sel .tick{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px #fff}
+  .req{color:var(--accent);text-transform:none;letter-spacing:0}
+  #statusBox.missing{background:#fde8e8;outline:2px solid var(--accent);outline-offset:-2px}
+  @media print{.req{display:none}}
+  .pin{position:fixed;inset:0;z-index:50;background:#1a1d21;display:flex;align-items:center;justify-content:center;padding:20px}
+  .pin[hidden]{display:none!important}
+  .pinbox{background:#fff;border-radius:12px;padding:22px 20px;width:100%;max-width:340px;text-align:center}
+  .pinbox input{width:100%;font-size:24px;letter-spacing:6px;text-align:center;border:1px solid #c9ced6;border-radius:8px;padding:10px}
+  .pinbox button{width:100%;font:inherit;font-weight:700;font-size:16px;border:none;border-radius:8px;padding:12px;background:#c8102e;color:#fff;cursor:pointer}
+  .psum{padding:8px 10px 0;font-size:14px;font-weight:700}
+  .psum span{display:inline-block;font-size:12px;padding:2px 8px;border-radius:9px;margin:0 4px 4px 0}
+  .psum .ok{background:#e6f4ea;color:#1e6b34}.psum .issue{background:#fff4d6;color:#8a5a00}.psum .notdone{background:#fde8e8;color:#9b1c1c}.psum .todo{background:#eef0f3;color:#5b6470}
+  #jobs{padding:8px 10px 0}
+  .job{border:1px solid var(--line);border-left:5px solid #c3c8cf;border-radius:7px;padding:8px 10px;margin-bottom:10px;background:#fff;break-inside:avoid}
+  .job.r-ok{border-left-color:#1e6b34}.job.r-issue{border-left-color:#d97706}.job.r-notdone{border-left-color:#b91c1c}
+  .job.missing{outline:2px solid var(--accent);background:#fff5f6}
+  .jhead{display:flex;align-items:center;gap:6px;margin-bottom:6px}.jhead b{flex:1;font-size:15px}
+  .jhead button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:5px;padding:4px 10px;cursor:pointer;color:var(--ink)}
+  .jhead button.sure{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .jgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .job input[type=text]{border:1px solid #d6dae0;border-radius:5px;padding:6px 8px;min-height:38px}
+  .job textarea{min-height:40px;margin-top:6px;font-size:14px}
+  .jres{display:flex;gap:6px;margin-top:6px}
+  .jres label{flex:1;position:relative;display:flex;align-items:center;justify-content:center;gap:4px;border:1.5px solid #d6dae0;border-radius:7px;padding:9px 2px;font-size:14px;font-weight:700;text-transform:none;letter-spacing:0;color:var(--ink);margin:0;cursor:pointer;background:#fff}
+  .jres input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+  .jres label.on.ok{background:#e6f4ea;border-color:#1e6b34;color:#1e6b34}
+  .jres label.on.issue{background:#fff4d6;border-color:#d97706;color:#8a5a00}
+  .jres label.on.notdone{background:#fde8e8;border-color:#b91c1c;color:#9b1c1c}
+  .jph{display:flex;gap:8px;margin-top:6px;align-items:flex-start}
+  .jph .box{width:86px;flex:none;font-size:11px}
+  .jadd{padding:0 10px 10px}
+  .jadd button{width:100%;font:inherit;font-weight:700;font-size:15px;border:1.5px dashed #9aa3ae;background:var(--soft);color:var(--ink);border-radius:7px;padding:12px;cursor:pointer}
+  body.ro .chips,body.ro .hub{display:none!important}
+  body.ro .jhead button,body.ro .jadd,body.ro .jph .box:not(.has),body.ro .jres label:not(.on){display:none!important}
+  body.ro .job textarea:placeholder-shown{display:none}
+  @media print{.jhead button,.jph .box:not(.has),.jres label:not(.on){display:none!important}.job textarea:placeholder-shown{display:none}.jph .box{width:30mm;height:30mm}#jobs{padding:2mm}}
+  .job.mini{padding:0;border-left-width:5px;margin-bottom:6px}
+  .jopen{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:none;padding:9px 10px;cursor:pointer}
+  .jn{flex:none;width:24px;height:24px;border-radius:50%;background:#eef0f3;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .jtxt{flex:1;min-width:0;display:flex;flex-direction:column}
+  .jtxt b{font-size:14px;overflow-wrap:anywhere}
+  .jtxt small{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .jtxt small.jprob{color:#8a3b00;white-space:normal}
+  .jside{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+  .jside small{font-size:11px;color:var(--muted)}
+  .jbadge{font-size:12px;font-weight:700;padding:3px 8px;border-radius:10px;white-space:nowrap}
+  .jbadge.ok{background:#e6f4ea;color:#1e6b34}.jbadge.issue{background:#fff4d6;color:#8a5a00}.jbadge.notdone{background:#fde8e8;color:#9b1c1c}.jbadge.todo{background:#eef0f3;color:#5b6470}
+  .mthumbs{display:flex;gap:6px;padding:0 10px 8px 44px}.mthumb{width:64px;height:64px;object-fit:cover;border-radius:4px;border:1px solid var(--line)}
+  .job.open .jtask{margin-top:6px;width:100%}
+  .jprobbox{margin-top:8px;padding:8px;border-radius:6px;background:#fafbfc;border:1px solid var(--line)}
+  .jprobbox .plbl{margin:0 0 4px}
+  .jprobbox textarea{margin-top:0}
+  .jfoot{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+  .jdone{display:block;margin:0 0 0 auto;font:inherit;font-weight:700;font-size:14px;border:none;border-radius:6px;padding:8px 16px;background:#1a1d21;color:#fff;cursor:pointer}
+  .jaddprob{font:inherit;font-size:14px;font-weight:700;color:#8a5a00;background:#fff4d6;border:1.5px solid #e9b949;border-radius:6px;padding:8px 14px;cursor:pointer}
+  .jnoissue{margin-top:6px;font:inherit;font-size:12.5px;color:var(--muted);background:none;border:none;padding:2px 0;cursor:pointer;text-decoration:underline}
+  .jprobbox{border-color:#e9b949!important;background:#fffaf0!important}
+  .jprobbox .plbl{color:#8a5a00!important}
+  .job.open .jmotor{margin-top:6px;width:100%}
+  .jempty{color:var(--muted);font-size:14px;text-align:center;margin:6px 0 10px}
+  .jadd button{background:var(--accent)!important;color:#fff!important;border:none!important;font-size:16px!important;padding:14px!important}
+  body.ro .jopen{cursor:default}
+  @media print{.mthumb{width:24mm;height:24mm}.jopen{padding:4px 6px}}
+  /* bigger tap targets for gloves / small phones */
+  form input[type=text],form input[type=email],form input[type=date],form input[type=time],form input[type=number],form select{min-height:40px}
+  table.parts input{min-height:40px}
+  .f{cursor:text}
+  .checks{gap:2px 14px}
+  .checks label{min-height:40px;padding:4px 2px}
+  .checks input{width:22px;height:22px}
+  .team label{min-height:40px}
+  .team input{width:20px;height:20px}
+  .jhead button{min-height:38px;padding:6px 12px}
+  .jnoissue{min-height:36px;padding:6px 0}
+  .vrow a,.vrow button{min-height:36px}
+  .vbtns button{min-height:36px}
+  @media print{.checks label,.team label{min-height:0;padding:0}}
+  #outbox{position:sticky;top:0;padding-right:64px;z-index:5;max-width:820px;margin:0 auto;background:#fff4d6;border-bottom:1px solid #ecd9a0}
+  .obbar{display:flex;align-items:center;gap:8px;padding:6px 10px}
+  #obHead{flex:1;min-width:0;display:flex;flex-direction:column;text-align:left;font:inherit;color:#5a4500;background:none;border:none;padding:2px 0;cursor:pointer;min-height:40px;justify-content:center}
+  #obHead span{font-size:14px}#obHead .obsub{font-size:12px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #obSend{flex:none;font:inherit;font-weight:700;font-size:14px;border:none;border-radius:6px;padding:9px 14px;background:#1a1d21;color:#fff;cursor:pointer;min-height:40px}
+  #obList{display:none;padding:0 10px 8px}#outbox.openp #obList{display:block}
+  .obrow{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #ecd9a0;border-radius:6px;padding:6px 8px;margin-top:6px}
+  .obtxt{flex:1;min-width:0;display:flex;flex-direction:column}.obtxt b{font-size:13px}.obtxt small{font-size:12px;color:#5b6470}
+  .obrow button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:5px;padding:6px 10px;min-height:36px;cursor:pointer}
+  .obrow button.sure{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .teambar{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;font:inherit;text-align:left;background:#fff;border:1.5px solid #d6dae0;border-radius:7px;padding:8px 10px;margin-top:4px;color:var(--ink);cursor:pointer}
+  .teambar .tnames{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .teambar .tnames.none{color:var(--muted)}
+  .teambar .chev{flex:none;color:var(--muted);transition:transform .15s}
+  .teambar.open{border-color:var(--accent)}.teambar.open .chev{transform:rotate(180deg)}
+  .teambox{border:1.5px solid var(--accent);border-top:none;border-radius:0 0 7px 7px;margin-top:-4px;padding:6px 10px 10px;background:#fff}
+  .teamdone{display:block;margin:8px 0 0 auto;font:inherit;font-weight:700;border:none;border-radius:6px;padding:9px 18px;background:#1a1d21;color:#fff;min-height:40px;cursor:pointer}
+  body.ro .teambar{border-color:transparent;padding-left:0}body.ro .teambar .chev{display:none}
+  @media print{.teambox{display:none!important}.teambar{border:none;padding:0;min-height:0}.teambar .chev{display:none}}
+
+  /* ======== REDESIGN ======== */
+  body{background:#eef0f3}
+  .sheet{background:transparent;padding:10px 12px 28px}
+  header{background:#fff;border-radius:12px;padding:12px 14px 10px;border:1px solid var(--line);border-bottom:3px solid var(--accent)}
+  header h1{font-size:19px}
+  section{background:#fff;border-radius:12px;border:1px solid var(--line)}
+  section>h2{background:#fff;font-size:15px;text-transform:none;letter-spacing:0;padding:12px 14px 4px;border-bottom:none}
+  .grid{gap:0 10px;padding:4px 14px 12px}
+  .f,.grid>.f:nth-child(2n),.grid.three>.f{border:none;padding:6px 0}
+  label,.lbl{font-size:11.5px;letter-spacing:.3px;margin-bottom:4px}
+  form input[type=text],form input[type=email],form input[type=date],form input[type=time],form input[type=number],form select,form textarea{
+    border:1px solid #d3d8df;border-radius:9px;background:#f8f9fb;padding:9px 11px;min-height:44px;font-size:16px}
+  form input:focus,form select:focus,form textarea:focus{border-color:var(--accent);background:#fff;outline:none}
+  table.parts{margin:0 0 8px}table.parts input{border-radius:6px!important}
+  @media (max-width:560px){.grid{grid-template-columns:1fr 1fr}.f.full{grid-column:1/-1}}
+  /* chips for ticks / choices */
+  .checks{display:flex;flex-wrap:wrap;gap:8px}
+  .checks label{position:relative;display:inline-flex;align-items:center;min-height:42px;padding:8px 14px;border:1.5px solid #d3d8df;border-radius:22px;background:#fff;font-size:14.5px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--ink);cursor:pointer;margin:0}
+  .checks input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+  .checks label:has(input:checked){background:#e6f4ea;border-color:#1e6b34;color:#14532d}
+  .checks label:has(input:checked)::before{content:'✓ ';margin-right:4px}
+  #statusBox .checks label:has(input[value=temp]:checked){background:#fff4d6;border-color:#d97706;color:#7a4b00}
+  #statusBox .checks label:has(input[value=further]:checked){background:#fde8e8;border-color:#b91c1c;color:#8b1a1a}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+  .chips button{min-height:42px;padding:8px 16px;border:1.5px solid #d3d8df;border-radius:22px;background:#fff;font:inherit;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer}
+  .chips button.on{background:#1a1d21;border-color:#1a1d21;color:#fff}
+  /* overview of sections */
+  .hub{display:none;margin-bottom:12px}
+  body.hubmode.athub .hub{display:block}
+  body.hubmode form section[data-step]{display:none}
+  body.hubmode form section[data-step].cur{display:block}
+  body.hubmode.athub .endbtns{display:block}body.hubmode:not(.athub) .endbtns{display:none}
+  .hprog{height:8px;border-radius:4px;background:#dfe3e8;margin:2px 2px 12px;overflow:hidden}.hprog i{display:block;height:100%;background:#1e6b34;border-radius:4px;transition:width .2s}
+  .hubnote{font-size:13px;color:#4c1d95;background:#ede9fe;border-radius:8px;padding:8px 10px;margin-bottom:10px}
+  .hcard{display:flex;align-items:center;gap:12px;width:100%;text-align:left;font:inherit;color:inherit;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;min-height:64px}
+  .hcard .hi{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;background:#eef0f3}
+  .hcard.done .hi{background:#e6f4ea;color:#1e6b34}.hcard.need{border-color:#d97706}.hcard.need .hi{background:#fff4d6}
+  .hcard .ht{flex:1;min-width:0}.hcard .ht b{display:block;font-size:15.5px}.hcard .ht small{display:block;font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hcard.need .ht small{color:#8a5a00;font-weight:600}.hcard .go{flex:none;color:var(--muted);font-size:22px}
+  .stepnav{display:none}
+  body.hubmode:not(.athub) .stepnav{display:flex;gap:8px;margin:4px 0 14px}
+  .stepnav button{flex:1;min-height:50px;font:inherit;font-weight:700;font-size:16px;border-radius:10px;cursor:pointer;border:1.5px solid #d3d8df;background:#fff;color:var(--ink)}
+  .stepnav button.next{flex:2;background:var(--accent);border-color:var(--accent);color:#fff}
+  .stepcount{display:none;font-size:12px;color:var(--accent);font-weight:700;padding:12px 14px 0;text-transform:uppercase;letter-spacing:.5px}
+  body.hubmode:not(.athub) section.cur>h2{padding-top:4px}
+  body.hubmode .bar{display:none!important}body.hubmode{padding-bottom:30px}
+  .chips button.other{color:var(--muted);border-style:dashed}
+  input.chipfilled{display:none}
+  .partsadd{display:block;width:calc(100% - 28px);margin:0 14px 12px;min-height:44px;font:inherit;font-weight:700;border:1.5px dashed #9aa3ae;background:var(--soft);border-radius:9px;color:var(--ink);cursor:pointer}
+  .endbtns button.hubclear{display:block;width:auto;margin:6px auto 0;padding:6px 10px;background:none!important;color:var(--muted)!important;font-weight:500;font-size:14px;text-decoration:underline}
+  body.editing .hubclear{display:none!important}
+  body:not(.hubmode) .hubclear{display:none!important}
+  .ph[hidden],.jph .box[hidden]{display:none!important}
+  .checks label{max-width:100%;white-space:normal}
+  /* the spare "+ Add photo" box is a slim full-width bar, not a big empty square */
+  .ph:not(:has(.box.has)){grid-column:1/-1}
+  .ph:not(:has(.box.has)) .box{aspect-ratio:auto;height:58px;font-size:15px;font-weight:700;color:var(--ink)}
+  .ph:not(:has(.box.has)) .num,.ph:not(:has(.box.has)) textarea{display:none}
+  @media print{.ph:not(:has(.box.has)){display:none!important}}
+  @media print{.ph[hidden]{display:none!important}}
+  #statusBox.missing{padding:8px 10px;border-radius:10px}
+  @media (max-width:560px){form .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}form .grid>.f.full{grid-column:1/-1}}
+  @media (max-width:340px){form .grid{grid-template-columns:minmax(0,1fr)}}
+  .hubclear{display:block;margin:4px auto 0;font:inherit;font-size:14px;color:var(--muted);background:none;border:none;text-decoration:underline;min-height:40px;cursor:pointer}
+  body.ro .partsadd,body.ro .hubclear{display:none}
+  body.dark .bar button:not(.primary){background:#181b21;color:var(--ink);border-color:var(--line)}body.dark .partsadd{background:#181b21!important}
+  body.hubmode:not(.athub) .stepcount{display:block}
+  /* home screen */
+  #homeView{max-width:820px;margin:0 auto;padding:14px 14px 40px}
+  .hometitle{margin:4px 2px 14px}.hometitle .co{color:var(--accent);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase}.hometitle h1{margin:0;font-size:26px}
+  .bigbtn{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:10px;min-height:84px;cursor:pointer}
+  .bigbtn .bi{flex:none;width:52px;height:52px;border-radius:12px;background:#fde8eb;display:flex;align-items:center;justify-content:center;font-size:26px}
+  .bigbtn .bt{flex:1;min-width:0}.bigbtn b{display:block;font-size:18px}.bigbtn small{display:block;font-size:13.5px;color:var(--muted);margin-top:2px}
+  .bigbtn small.draft{color:#8a5a00;font-weight:600}.bigbtn .go{font-size:28px;color:var(--muted)}
+  .hsec{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:6px 0 12px}
+  .hhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.hhead b{font-size:16px}
+  .hhead button{font:inherit;font-weight:600;font-size:14px;color:var(--accent);background:none;border:none;min-height:40px;cursor:pointer}
+  .hnone{color:var(--muted);font-size:14px;margin:4px 0}
+  .hrow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:none;border-top:1px solid var(--line);padding:10px 0;min-height:48px;cursor:pointer}
+  .hrow b{font-size:14.5px}.hrow small{display:block;color:var(--muted);font-size:12.5px}.hrow .pill{margin-left:auto}
+  .darkt{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-height:52px;font-size:15px;font-weight:600;text-transform:none;letter-spacing:0;color:var(--ink);cursor:pointer}
+  .darkt input{position:absolute;opacity:0;width:1px;height:1px}.darkt .sw{width:46px;height:28px;border-radius:14px;background:#cfd4db;position:relative;transition:background .15s}
+  .darkt .sw::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .15s}
+  .darkt:has(input:checked) .sw{background:#1e6b34}.darkt:has(input:checked) .sw::after{left:21px}
+  /* dark mode */
+  body.dark{--ink:#e8eaee;--muted:#9aa3b2;--line:#323844;--soft:#232833;background:#0d0f13;color:var(--ink)}
+  body.dark header,body.dark section,body.dark section>h2,body.dark .hcard,body.dark .bigbtn,body.dark .hsec,body.dark .darkt,body.dark #listView,body.dark .card,body.dark .job,
+  body.dark .teambar,body.dark .teambox,body.dark .modal>div,body.dark .stepnav button:not(.next),body.dark .chips button:not(.on),body.dark .checks label,body.dark .bar,body.dark .listbar,
+  body.dark .jadd button,body.dark .box,body.dark .vid,body.dark .obrow,body.dark .pinbox{background:#181b21!important;color:var(--ink);border-color:var(--line)}
+  body.dark form input,body.dark form select,body.dark form textarea,body.dark #listView input,body.dark #listView select,body.dark .modal input{background:#0d0f13!important;color:var(--ink);border-color:#3a4150!important}
+  body.dark .checks label:has(input:checked){background:#123b22!important;border-color:#2f9e57;color:#c9f2d6}
+  body.dark .chips button.on{background:#e8eaee!important;color:#111!important}
+  body.dark .hcard .hi,body.dark .bigbtn .bi{background:#262b35}body.dark .hcard.done .hi{background:#123b22}
+  body.dark #outbox{background:#3a2e08;color:#f4e3b0}body.dark .banner.view{background:#14233f;color:#cfe0ff}
+  body.dark .job.mini .jopen{color:var(--ink)}body.dark .jprobbox{background:#2a2108!important}
+  @media print{
+    body,body.dark{background:#fff!important;color:#000!important;--ink:#1a1d21;--muted:#5b6470;--line:#c9ced6}
+    body.dark *{background-color:#fff!important;color:#000!important}
+    body.hubmode form section[data-step]{display:block!important}.hub,.stepnav,.stepcount,#homeView{display:none!important}
+    header,section{border-radius:0}.checks label{border:none;padding:0 8px 0 0;min-height:0;font-weight:400}
+    .checks label::before{content:'☐ '}.checks label:has(input:checked)::before{content:'☑ '}.chips{display:none}
+  }
+  .jprobbox .plbl{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px;font-weight:700;text-transform:none;letter-spacing:0}
+  .jissdel{font:inherit;font-size:13px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 10px;min-height:36px;cursor:pointer}
+  .jissdel.sure{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .jprobbox+.jprobbox{margin-top:8px}
+  body.dark .jissdel{background:#181b21}
+  #setView{max-width:820px;margin:0 auto;padding:14px 14px 60px}
+  .sset{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+  .sset h3{margin:0 0 4px;font-size:16px}.shint{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .sset .darkt{border:none;padding:4px 0;min-height:44px}
+  .taglist{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .tag{display:inline-flex;align-items:center;gap:2px;border:1.5px solid #d3d8df;border-radius:22px;padding:2px 2px 2px 14px;font-size:14.5px;font-weight:600;background:#fff;min-height:40px}
+  .tag button{border:none;background:none;font-size:20px;line-height:1;color:var(--muted);width:36px;height:36px;border-radius:50%;cursor:pointer}
+  .tag button.sure{background:var(--accent);color:#fff}
+  .addrow{display:flex;gap:8px}.addrow input{flex:1;min-width:0;font:inherit;font-size:16px;border:1px solid #d3d8df;border-radius:9px;background:#f8f9fb;padding:9px 11px;min-height:44px}
+  .addrow button{flex:none;font:inherit;font-weight:700;border:none;border-radius:9px;background:#1a1d21;color:#fff;padding:0 18px;min-height:44px;cursor:pointer}
+  .cli{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+  .clihead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.clihead b{font-size:16px}
+  .clihead button{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:6px;padding:6px 10px;min-height:36px;color:var(--muted);cursor:pointer}
+  .clihead button.sure{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .cli .taglist{margin-bottom:8px}.cli .addrow input{min-height:40px}.cli .addrow button{min-height:40px;background:#fff;color:var(--ink);border:1.5px solid #d3d8df}
+  #setAdminPin{width:100%;font:inherit;font-size:16px;border:1px solid #d3d8df;border-radius:9px;padding:9px 11px;min-height:44px}
+  .setsave{display:block;width:100%;min-height:52px;font:inherit;font-weight:700;font-size:17px;border:none;border-radius:10px;background:var(--accent);color:#fff;cursor:pointer}
+  .setsave:disabled{background:#c9ced6;color:#fff}
+  body.dark .sset,body.dark .tag,body.dark .cli,body.dark .clihead button,body.dark .cli .addrow button{background:#181b21!important;color:var(--ink);border-color:var(--line)}
+  body.dark .addrow>button{background:#e8eaee!important;color:#111!important}
+  body.dark .addrow input,body.dark #setAdminPin{background:#0d0f13;color:var(--ink);border-color:#3a4150}
+  #viewText{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:60px}
+  .modal input[type=email]:focus{outline:2px solid #c8102e}
+  .toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#1a1d21;color:#fff;padding:8px 14px;border-radius:6px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}
+  .toast.show{opacity:1}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+  .modal.show{display:flex}
+  .modal div{background:#fff;border-radius:8px;padding:16px;max-width:340px}
+  .modal p{margin:0 0 12px}
+  .modal .btns{display:flex;gap:8px;justify-content:flex-end;padding:0;max-width:none}
+  .modal button{font:inherit;padding:7px 12px;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .modal button.danger{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+
+  .homebtn{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);left:max(10px,calc(50vw - 400px));z-index:30;display:flex;align-items:center;gap:6px;height:46px;padding:0 18px 0 14px;border-radius:23px;border:none;background:#1a1d21;color:#fff;font:inherit;font-weight:700;font-size:16px;box-shadow:0 3px 12px rgba(0,0,0,.25);cursor:pointer}
+  .homebtn span{font-size:26px;line-height:1;margin-top:-3px}
+  body.offhome{padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+  .bar #submitBtn{flex:1 1 auto;max-width:260px}
+  .bar button{min-height:46px}
+  .sheetback{position:fixed;inset:0;z-index:40;background:rgba(10,12,16,.4)}
+  .msheet{position:fixed;left:0;right:0;bottom:0;z-index:41;max-width:520px;margin:0 auto;background:#fff;border-radius:18px 18px 0 0;padding:10px 12px calc(12px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:6px;box-shadow:0 -8px 30px rgba(0,0,0,.25)}
+  .msheet[hidden]{display:none}
+  .msheet button{display:flex;align-items:center;gap:12px;font:inherit;font-size:17px;font-weight:600;text-align:left;border:none;border-radius:12px;background:#f2f4f7;color:var(--ink);padding:0 16px;min-height:54px;cursor:pointer}
+  .msheet button.dang{color:var(--accent)}.msheet button.cancel{justify-content:center;background:none;border:1.5px solid var(--line);margin-top:4px}
+  body.dark .msheet{background:#181b21}body.dark .msheet button{background:#232831;color:var(--ink)}body.dark .msheet button.cancel{background:none}
+  .emailbox{max-height:calc(100vh - 40px);overflow:auto}
+  .elab{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:4px 0 4px}.elab small{font-weight:400}
+  .ein{display:block;width:100%;box-sizing:border-box;font:inherit;font-size:16px;border:1px solid #c9ced6;border-radius:8px;padding:9px 10px;margin-bottom:8px;min-height:44px}
+  textarea.ein{min-height:180px;resize:vertical;line-height:1.4}
+  .elink{font:inherit;font-size:13px;border:none;background:none;color:var(--accent);padding:6px 0;margin:-4px 0 6px;min-height:36px;cursor:pointer;text-decoration:underline}
+  body.dark .ein{background:#0d0f13;color:var(--ink);border-color:#3a4150}
+  #homeLocal .obrow{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:8px 0}
+  #homeLocal .obrow .hrow{border:none;padding:4px 0;flex:1;min-width:0}
+  #homeLocal .obrow>button:not(.hrow){flex:none;font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);background:#fff;border-radius:8px;padding:0 10px;min-height:40px;cursor:pointer;color:var(--ink)}
+  #homeLocal .obrow>button.sure{background:var(--accent);color:#fff;border-color:var(--accent)}
+  #homeLocal .tagd{font-size:11px;font-weight:700;padding:1px 7px;border-radius:9px;background:#fff4d6;color:#8a5a00;white-space:nowrap}
+  #homeLocal .tago{background:#e3ecff;color:#1d4ed8}#homeLocal .tagf{background:#fde2e2;color:#b91c1c}
+  body.dark #homeLocal .obrow>button:not(.hrow){background:#181b21;border-color:var(--line)}
+  #homeLocal .obrow{border:none!important;border-top:1px solid var(--line)!important;border-radius:0!important;background:none!important;padding:8px 0!important;margin:0!important}
+  #emailModal input.ein{border:1px solid #c9ced6!important;border-radius:8px!important;padding:9px 10px!important;background:#fff}
+  body.dark #emailModal input.ein{background:#0d0f13!important;border-color:#3a4150!important}
+  /* tidy-up */
+  body.ro input.chipfilled{display:block!important}
+  body.ro fieldset ::placeholder{color:transparent!important;-webkit-text-fill-color:transparent!important}
+  body.ro section.roempty,body.ro .f.roempty{display:none!important}
+  body.ro .checks label:not(:has(input:checked)){display:none!important}body.ro .req{display:none}
+  .banner.view{flex-wrap:wrap}
+  #viewText{flex:1 1 100%;font-weight:700;font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .vbtns{flex:1 1 100%;display:grid!important;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:6px}
+  .vbtns button[hidden]{display:none}
+  .banner.view .vbtns button{min-height:42px;font-size:14px;padding:4px 6px}
+  header .co{white-space:nowrap}
+  @media (max-width:400px){header .ref input{width:112px!important}header h1{font-size:20px!important}header .co{font-size:11px}}
+  .bar #barPdf{flex:1 1 auto;max-width:260px}
+  body.dark .banner.view button{background:#181b21;color:var(--ink);border-color:#2f3a52}
+  body.dark .jn{background:#2a303b;color:var(--ink)}
+  .modal .btns{background:none!important;border:none!important;position:static!important;box-shadow:none!important}
+  .elab{text-transform:none!important;letter-spacing:0!important;font-size:14px!important;color:var(--ink)!important}.elab small{color:var(--muted)}
+  body.dark .modal button:not(.danger){background:#232831;color:var(--ink);border-color:#3a4150}
+  .htiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+  .tile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;font:inherit;color:inherit;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px;min-height:104px;cursor:pointer}
+  .tile .ti{font-size:24px;margin-bottom:6px}.tile b{font-size:16px}.tile small{font-size:13px;color:var(--muted)}
+  body.dark .tile{background:#181b21;border-color:var(--line);color:var(--ink)}body.dark .homebtn{background:#e8eaee;color:#111}
+  .banner{max-width:820px;margin:0 auto;background:#fff4d6;color:#5a4500;font-size:13px;padding:8px 14px;border-bottom:1px solid #ecd9a0}
+  .banner.view{background:#e8f0fe;color:#1d3d7a;border-color:#c6d6f6;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .banner.view button{font:inherit;font-size:13px;font-weight:600;border:1px solid #c6d6f6;background:#fff;border-radius:5px;padding:5px 10px;cursor:pointer}
+  #listView{max-width:820px;margin:0 auto;min-height:70vh;padding:4px 14px 90px}
+  #listView .hometitle{padding:10px 2px 0!important}
+  #listView .tools{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  #listView .tools input,#listView .tools select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:8px 10px;flex:1;min-width:140px;background:#fff}
+  .card{display:block;width:100%;text-align:left;font:inherit;color:inherit;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;background:#fff;padding:10px 12px;margin-bottom:8px;cursor:pointer}
+  .card:hover{background:#fafbfc}
+  .card .top{display:flex;justify-content:space-between;gap:8px;font-weight:700}
+  .card .meta{font-size:13px;color:var(--muted);margin-top:3px}
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:9px;background:#e6f4ea;color:#1e6b34;white-space:nowrap}
+  .pill.temp{background:#fff4d6;color:#7a5a00}.pill.further{background:#fde8e8;color:#9b1c1c}.pill.none{background:#eef0f3;color:#5b6470}
+  .empty{color:var(--muted);text-align:center;padding:40px 10px}
+  body.ro fieldset input,body.ro fieldset textarea,body.ro fieldset select{color:var(--ink);-webkit-text-fill-color:var(--ink);opacity:1;border-color:transparent}
+  body.ro .rm,body.ro .clr,body.ro .box input,body.ro .box .hint,body.ro #addPart{display:none!important}
+  body.ro .box{cursor:default}
+  fieldset{border:none;margin:0;padding:0;min-width:0}
+  [hidden]{display:none!important}
+  .bar button:disabled{opacity:.5}
+
+  @media (max-width:560px){
+    .grid,.grid.three{grid-template-columns:1fr}
+    .f{border-right:none!important}
+    .photos{grid-template-columns:repeat(2,1fr)}
+    header h1{font-size:19px}
+    .bar{gap:6px;padding:8px}
+    .bar button{padding:8px 10px;font-size:13px}
+    .bar .note{display:none}
+  }
+
+  @page{size:A4;margin:10mm}
+  @media print{
+    body{background:#fff;font-size:10.5pt}
+    .sheet{max-width:none;padding:0}
+    .homebtn,.msheet,.sheetback,.banner,#listView,.bar,.toast,.modal,.rm,.clr,.no-print{display:none!important}
+    header h1{font-size:16pt}
+    section{margin-bottom:4mm;break-inside:auto}
+    .f,tr,.ph{break-inside:avoid}
+    ::placeholder{color:transparent}
+    input::-webkit-calendar-picker-indicator{display:none}
+    input,select,textarea{border-bottom:1px solid #bbb!important;background:transparent!important}
+    textarea{border:1px solid #bbb!important;overflow:hidden;resize:none}
+    textarea.tall{min-height:30mm}
+    select{appearance:none;-webkit-appearance:none}
+    .photos{grid-template-columns:repeat(3,50mm);justify-content:space-between;gap:5mm 0;padding:4mm}
+    .ph{width:50mm}
+    .box{width:50mm;height:50mm;aspect-ratio:auto;background:#fff}
+    .box .hint{display:none}
+    .ph textarea{min-height:16mm;font-size:9pt}
+    .photo-sec{break-before:page}
+    .sig{height:22mm}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<button type="button" id="tabHome" class="homebtn no-print" hidden><span>‹</span> Home</button>
+<div id="outbox" class="no-print" hidden><div class="obbar"><button type="button" id="obHead"></button><button type="button" id="obSend">Send now</button></div><div id="obList"></div></div>
+<div class="banner no-print" id="offline" hidden>Not connected to the Google sheet – you can still fill this in and print it.</div>
+<div class="banner view no-print" id="viewBanner" hidden><span id="viewText"></span><span class="vbtns"><button type="button" id="vEdit">Edit</button> <button type="button" id="vCopy">Copy</button> <button type="button" id="vEmail">Email</button> <button type="button" id="vBack">Back</button></span></div>
+<div id="homeView" class="no-print" hidden>
+  <div class="hometitle"><div class="co">Mayday Maintenance</div><h1>Reports</h1></div>
+  <button type="button" id="tabNew" class="bigbtn"><span class="bi">🔧</span><span class="bt"><b>New job report</b><small id="homeJobDraft">Breakdowns, repairs, installs</small></span><span class="go">›</span></button>
+  <button type="button" id="tabPpm" class="bigbtn"><span class="bi">📋</span><span class="bt"><b>New PPM sheet</b><small id="homePpmDraft">A round of quick inspections</small></span><span class="go">›</span></button>
+  <div class="htiles"><button type="button" id="tabList" class="tile"><span class="ti">📁</span><b>All reports</b><small><span id="cnt">0</span> saved</small></button><button type="button" id="tabSet" class="tile"><span class="ti">⚙️</span><b>Settings</b><small>Names, clients, dark mode</small></button></div>
+  <div class="hsec" id="homeLocalSec" hidden><div class="hhead"><b>📱 On this phone</b><button type="button" id="homeSend" hidden>Send now</button></div><div id="homeLocal"></div></div>
+  <div class="hsec"><div class="hhead"><b>Today</b><button type="button" id="homeAll">All reports ›</button></div><div id="homeToday"><p class="hnone">Nothing saved today yet.</p></div></div>
+</div>
+<div id="setView" class="no-print" hidden>
+  <div class="hometitle"><div class="co">Mayday Maintenance</div><h1>Settings</h1></div>
+  <div class="sset"><h3>Display</h3>
+    <label class="darkt"><span>🌙 Dark mode</span><input type="checkbox" id="darkToggle"><span class="sw"></span></label></div>
+  <div class="sset"><h3>Team names</h3><p class="shint">Shown in "Team on Job" and "Completed by". Tap × to remove someone.</p>
+    <div id="setTeam" class="taglist"></div>
+    <div class="addrow"><input type="text" id="newName" placeholder="Add a name" autocapitalize="words" enterkeyhint="done"><button type="button" id="addName">Add</button></div></div>
+  <div class="sset"><h3>Clients &amp; sites</h3><p class="shint">These become the quick buttons on the reports.</p>
+    <div id="setClients"></div>
+    <div class="addrow"><input type="text" id="newClient" placeholder="Add a client" autocapitalize="words" enterkeyhint="done"><button type="button" id="addClient">Add</button></div></div>
+  <div id="setAdminRow" class="sset" hidden><h3>Manager PIN</h3><input type="password" id="setAdminPin" inputmode="numeric" placeholder="Manager PIN"></div>
+  <button type="button" id="setSave" class="setsave" disabled>Save changes</button>
+  <p id="setMsg" class="shint" style="text-align:center"></p>
+</div>
+<div id="listView" class="no-print" hidden>
+  <div class="hometitle" style="padding:14px 14px 0"><div class="co">Mayday Maintenance</div><h1>All reports</h1></div>
+  <div class="tools"><input type="search" id="q" placeholder="Search reports…"><select id="fClient"><option value="">All clients</option></select><button type="button" id="selBtn" style="font:inherit;border:1px solid var(--line);background:#fff;border-radius:6px;padding:8px 12px">Select</button><button type="button" id="refresh" style="font:inherit;border:1px solid var(--line);background:#fff;border-radius:6px;padding:8px 12px">Refresh</button></div>
+  <div id="list"><p class="empty">Loading reports…</p></div>
+  <div class="listbar" id="listBar" hidden><span id="selCount">0 selected</span><button type="button" id="selAll">Today's</button><button type="button" class="primary" id="selEmail">Email selected</button><button type="button" id="selCancel">Cancel</button></div>
+</div>
+<form class="sheet" id="form" autocomplete="off"><fieldset id="fs">
+  <header>
+    <div>
+      <div class="co">Mayday Maintenance</div>
+      <h1>Job Completion Report</h1>
+    </div>
+    <div class="ref">Report No.<br><input type="text" name="reportNo" readonly autocapitalize="characters" style="width:140px;text-align:right;font-weight:700" placeholder="Auto"><br><span id="rnHint" class="no-print" style="font-size:10px">tap to type your own</span></div>
+  </header>
+
+  <div class="hub no-print" id="hub"></div>
+  <section data-step="1">
+    <div class="stepcount"></div>
+    <h2>Client &amp; location</h2>
+    <div class="grid">
+      <div class="f full"><label>Client</label><div class="chips" data-for="client"></div><input type="text" name="client" placeholder="or type a client"></div>
+      <div class="f full"><label>Site</label><div class="chips" data-for="site"></div><input type="text" name="site" placeholder="or type a site"></div>
+      <div class="f"><label>Requested by</label><input type="text" name="contact"></div>
+      <div class="f"><label>Area / dept</label><input type="text" name="area"></div>
+      <div class="f"><label>Line</label><input type="text" name="line" placeholder="e.g. Line 3"></div>
+      <div class="f"><label>Machine</label><input type="text" name="machine"></div>
+      <div class="f full"><label>Motor / Asset No.</label><input type="text" name="asset"></div>
+    </div>
+  </section>
+
+  <section data-step="1">
+    <div class="stepcount"></div>
+    <h2>Job information</h2>
+    <div class="grid">
+      <div class="f"><label>Job / WO no.</label><input type="text" name="jobNo"></div>
+      <div class="f"><label>Date</label><input type="date" name="date"></div>
+      <div class="f full"><span class="lbl">Team on Job</span>
+        <input type="hidden" name="engineers" id="engineers"><input type="hidden" name="teamTicked" id="teamTicked">
+        <button type="button" class="teambar"><span class="tnames">Tap to choose…</span><span class="tcount" id="teamCount"></span><span class="chev">▾</span></button>
+        <div class="teambox" hidden><div class="team" id="team"></div>
+          <input type="text" name="teamOther" class="other" placeholder="Anyone else (type name)">
+          <button type="button" class="teamdone">Done</button></div>
+      </div>
+      <div class="f"><label>Time Start</label><input type="time" name="tStart"></div>
+      <div class="f"><label>Time Finish</label><input type="time" name="tFinish"></div>
+      <div class="f full"><label>Job Type</label>
+        <div class="checks">
+          <label><input type="checkbox" name="type_breakdown">Breakdown</label>
+          <label><input type="checkbox" name="type_pm">Planned maint.</label>
+          <label><input type="checkbox" name="type_project">Project / install</label>
+          <label><input type="checkbox" name="type_fab">Fabrication / welding</label>
+          <label><input type="checkbox" name="type_other">Other</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-step="2">
+    <div class="stepcount"></div>
+    <h2>Work done</h2>
+    <div class="grid">
+      <div class="f full"><label>Fault Reported / Work Requested</label><textarea name="requested"></textarea></div>
+      <div class="f full"><label>Work Carried Out</label><textarea name="workDone" class="tall"></textarea></div>
+      <div class="f full"><label>Root Cause / Issues Found</label><textarea name="cause" style="min-height:50px"></textarea></div>
+    </div>
+  </section>
+
+
+  <section data-step="4">
+    <div class="stepcount"></div>
+    <h2>Safety &amp; status</h2>
+    <div class="grid">
+      <div class="f"><label>Permit No.</label><input type="text" name="permit"></div>
+      <div class="f"><label>Permit Writer</label><input type="text" name="permitWriter" placeholder="Name"></div>
+      <div class="f full"><label>Safety</label>
+        <div class="checks">
+          <label><input type="checkbox" name="loto">LOTO applied</label>
+          <label><input type="checkbox" name="confined">Confined space</label>
+          <label><input type="checkbox" name="hotwork">Hot works</label>
+          <label><input type="checkbox" name="height">Working at height</label>
+          <label><input type="checkbox" name="guards">Guards refitted</label>
+          <label><input type="checkbox" name="safeHandover">Safe for handover / use</label>
+        </div>
+      </div>
+      <div class="f full" id="statusBox"><label>Job Status <span class="req">* required</span></label>
+        <div class="checks">
+          <label><input type="radio" name="status" value="complete">Complete</label>
+          <label><input type="radio" name="status" value="temp">Temporary fix</label>
+          <label><input type="radio" name="status" value="further">Further work needed</label>
+        </div>
+      </div>
+      <div class="f full"><label>Handover</label>
+        <div class="checks">
+          <label><input type="checkbox" name="handback">Asset handed back</label>
+          <label><input type="radio" name="tested" value="yes">Asset tested</label>
+          <label><input type="radio" name="tested" value="no">Asset unable to test</label>
+        </div>
+        <div id="notTestedBox" hidden><label style="margin-top:6px">Reason not tested</label><textarea name="notTestedWhy" style="min-height:50px"></textarea></div>
+      </div>
+      <div class="f full"><label>Further Work / Recommendations</label><textarea name="further" style="min-height:55px"></textarea></div>
+    </div>
+  </section>
+
+  <section class="photo-sec" data-step="3">
+    <div class="stepcount"></div>
+    <h2>Photos</h2>
+    <div class="photos" id="photos"></div>
+  </section>
+
+  <section class="no-print" id="videoSec" data-step="3">
+    <div class="stepcount"></div>
+    <h2>Videos <span style="text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)">(up to 3)</span></h2>
+    <div class="vids">
+      <div id="vidList"></div>
+      <label class="vadd" id="vidAdd">+ Add video<input type="file" accept="video/*" id="vidInput"></label>
+      <p class="vnote" id="vidNote">Videos send when you press Save report – keep the app open until it says done.</p>
+    </div>
+  </section>
+  <section data-step="3">
+    <div class="stepcount"></div>
+    <h2>Parts &amp; materials used</h2>
+    <table class="parts">
+      <thead><tr><th style="width:60%">Description</th><th>Part No.</th><th style="width:14%">Qty</th></tr></thead>
+      <tbody id="partsBody"></tbody>
+    </table>
+    <button type="button" class="partsadd no-print" id="addPartIn">+ Add part row</button>
+  </section>
+
+  <section data-step="5">
+    <div class="stepcount"></div>
+    <h2>Finish &amp; send</h2>
+    <div class="grid">
+      <div class="f full"><label>Name</label><select name="completedBy" id="completedBy"><option value="">Choose…</option></select></div>
+      <div class="f full"><label>Email PDF To</label><input type="email" name="clientEmail" multiple inputmode="email" autocapitalize="off" placeholder="client@example.com"></div>
+      <div class="f full no-print"><div class="checks"><label><input type="checkbox" name="emailNow">Email the PDF to the client when I save</label></div></div>
+    </div>
+  </section>
+  <div class="stepnav no-print"></div>
+</fieldset>
+<div class="endbtns no-print"><button type="button" id="submitBtn2" hidden>Save report</button><button type="button" class="hubclear" data-clear="1">Clear this form and start again</button></div>
+</form>
+<form class="sheet" id="ppmForm" autocomplete="off" hidden><fieldset id="pfs">
+  <header>
+    <div>
+      <div class="co">Mayday Maintenance</div>
+      <h1>PPM / Inspection Sheet</h1>
+    </div>
+    <div class="ref">Report No.<br><input type="text" name="reportNo" class="rno" readonly autocapitalize="characters" style="width:140px;text-align:right;font-weight:700" placeholder="Auto"><br><span class="rnHint no-print" style="font-size:10px">tap to type your own</span></div>
+  </header>
+
+  <div class="hub no-print" id="phub"></div>
+  <section data-step="1">
+    <div class="stepcount"></div>
+    <h2>Visit details</h2>
+    <div class="grid">
+      <div class="f full"><label>Client</label><div class="chips" data-for="client"></div><input type="text" name="client" placeholder="or type a client"></div>
+      <div class="f full"><label>Site</label><div class="chips" data-for="site"></div><input type="text" name="site" placeholder="or type a site"></div>
+      <div class="f"><label>Date</label><input type="date" name="date"></div>
+      <div class="f"><label>Area / Department</label><input type="text" name="area"></div>
+      <div class="f"><label>Permit No.</label><input type="text" name="permit"></div>
+      <div class="f"><label>Permit Writer</label><input type="text" name="permitWriter" placeholder="Name"></div>
+      <div class="f full"><span class="lbl">Team on Job</span>
+        <input type="hidden" name="engineers"><input type="hidden" name="teamTicked">
+        <button type="button" class="teambar"><span class="tnames">Tap to choose…</span><span class="tcount" id="pteamCount"></span><span class="chev">▾</span></button>
+        <div class="teambox" hidden><div class="team" id="pteam"></div>
+          <input type="text" name="teamOther" class="other" placeholder="Anyone else (type name)">
+          <button type="button" class="teamdone">Done</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-step="2">
+    <div class="stepcount"></div>
+    <h2>Inspections</h2>
+    <div class="psum" id="psum"></div>
+    <div id="jobs"></div>
+    <div class="jadd no-print"><button type="button" id="addJob">+ Add inspection</button></div>
+  </section>
+
+  <section data-step="3">
+    <div class="stepcount"></div>
+    <h2>Finish &amp; send</h2>
+    <div class="grid">
+      <div class="f full"><label>Name</label><select name="completedBy" id="pCompletedBy"><option value="">Choose…</option></select></div>
+      <div class="f full"><label>Email PDF To</label><input type="email" name="clientEmail" multiple inputmode="email" autocapitalize="off" placeholder="client@example.com"></div>
+      <div class="f full no-print"><div class="checks"><label><input type="checkbox" name="emailNow">Email the PDF to the client when I save</label></div></div>
+    </div>
+  </section>
+  <div class="stepnav no-print"></div>
+</fieldset>
+<div class="endbtns no-print"><button type="button" id="submitBtn3" hidden>Save report</button><button type="button" class="hubclear" data-clear="1">Clear this form and start again</button></div>
+</form>
+
+
+<div class="bar no-print">
+  <button type="button" class="primary" id="submitBtn" hidden>Save report</button>
+  <button type="button" id="draftBtn">Draft</button>
+  <button type="button" id="barPdf" hidden>⬇️ Download PDF</button>
+  <button type="button" id="moreBtn">More ⋯</button>
+  <button type="button" id="addPart" hidden>+ Part</button>
+  <p class="note">Save report sends it to the office. Draft keeps it on this phone only.</p>
+</div>
+<div id="moreBack" class="sheetback no-print" hidden></div>
+<div id="moreSheet" class="msheet no-print" hidden role="dialog" aria-label="More options">
+  <button type="button" id="mEmail">✉️ <span>Email report…</span></button>
+  <button type="button" id="pdfBtn">⬇️ <span>Download PDF</span></button>
+  <button type="button" id="printBtn">🖨️ <span>Print</span></button>
+  <button type="button" id="newBtn" class="dang">🗑️ <span>Clear form</span></button>
+  <button type="button" id="moreClose" class="cancel">Cancel</button>
+</div>
+<div id="pinScreen" class="pin no-print" hidden><form id="pinForm" class="pinbox" autocomplete="off">
+  <div class="co" style="color:#c8102e;font-weight:700;font-size:12px;letter-spacing:1px">MAYDAY MAINTENANCE</div>
+  <h2 style="margin:4px 0 6px">Job Reports</h2>
+  <p style="margin:0 0 12px;color:#5b6470;font-size:14px">Enter the team PIN to continue. Ask the office if you don't have it.</p>
+  <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="Team PIN">
+  <p id="pinMsg" style="color:#c8102e;font-size:13px;min-height:18px;margin:6px 0"></p>
+  <button type="submit" id="pinGo">Unlock</button>
+</form></div>
+<div class="toast" id="toast"></div>
+<div class="modal" id="emailModal"><div class="emailbox"><p style="margin:0 0 8px"><b id="emailTitle">Email PDF</b></p>
+<label class="elab">To <small>– separate several addresses with commas</small></label>
+<input type="email" id="emailTo" inputmode="email" autocapitalize="off" class="ein">
+<p id="emailPrev" style="font-size:12px;color:#5b6470;margin:0 0 8px"></p>
+<label class="elab">Subject</label><textarea id="emailSubj" class="ein" rows="2" style="min-height:0;resize:none"></textarea>
+<label class="elab">Message <small>– change it however you like. The PDF is attached.</small></label>
+<textarea id="emailBody" class="ein" rows="9"></textarea>
+<button type="button" id="emailReset" class="elink" hidden>Undo my changes to the wording</button>
+<div class="btns"><button type="button" id="eCancel">Cancel</button><button type="button" class="danger" id="eSend">Send</button></div></div></div>
+<div class="modal" id="askModal"><div><p id="askText"></p><div class="btns"><button type="button" id="askNo">Cancel</button><button type="button" class="danger" id="askYes">OK</button></div></div></div>
+<div class="modal" id="modal"><div><p id="mText">Clear this report and start a new blank one?</p><div id="adminRow" hidden><input type="password" id="adminPin" inputmode="numeric" placeholder="Manager PIN" style="width:100%;font:inherit;border:1px solid #c9ced6;border-radius:6px;padding:8px;margin-bottom:6px"></div><p id="mErr" style="color:#c8102e;font-size:13px;margin:0 0 8px"></p><div class="btns"><button type="button" id="mCancel">Cancel</button><button type="button" class="danger" id="mOk">Clear</button></div></div></div>
+
+<script>
+(function(){
+  const KEY='mayday-job-report-v1';
+  const $=id=>document.getElementById(id);
+  const form=$('form'), fs=$('fs'), partsBody=$('partsBody'), photosEl=$('photos');
+  const pform=$('ppmForm'), pfs=$('pfs'), jobsEl=$('jobs');
+  // Two ways to reach Google: inside the Google page (google.script.run), or from the app's own web address (API_URL)
+  const API_URL=(typeof window.MAYDAY_API==='string'&&/^https:\/\//.test(window.MAYDAY_API))?window.MAYDAY_API:'';
+  const IN_GOOGLE=(typeof google!=='undefined'&&google.script&&google.script.run);
+  const HAS_GS=!!(IN_GOOGLE||API_URL);
+  const PKEY='mayday-pin';
+  let PIN='';try{PIN=localStorage.getItem(PKEY)||'';}catch(e){}
+  const gsRaw=(fn,...a)=>IN_GOOGLE?new Promise((res,rej)=>google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](...a)):
+    (async()=>{const ctl=typeof AbortController!=='undefined'?new AbortController():null;const t=ctl?setTimeout(()=>ctl.abort(),340000):0;
+      let resp;try{resp=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn,args:a}),redirect:'follow',signal:ctl?ctl.signal:undefined});}
+      catch(e){throw new Error('NetworkError: '+(e&&e.name==='AbortError'?'timed out':'connection failed'));}finally{clearTimeout(t);}
+      const txt=await resp.text().catch(()=>'');let j=null;try{j=JSON.parse(txt);}catch(e){
+        if(/doPost|Script function not found/i.test(txt))throw new Error('The Google side needs updating – in Apps Script deploy a new version with the latest Code.gs');
+        throw new Error('NetworkError: unavailable ('+resp.status+')');}
+      if(!j||!j.ok)throw new Error((j&&j.error)||'Something went wrong');return j.r;})();
+  // ask the phone to keep this app's saved drafts for good
+  try{if(API_URL&&navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});}catch(e){}
+  const errMsg=e=>String((e&&e.message)||e||'');
+  let editT=null,editSnap=null,editDirty=false;
+  try{editSnap=JSON.parse(localStorage.getItem('mayday-edit')||'null');}catch(e){}
+  const gs=(fn,...a)=>gsRaw(fn,PIN,...a).catch(e=>{if(/WRONG_PIN/.test(errMsg(e)))showPin('That PIN is no longer right – it may have been changed. Enter the team PIN.');throw e;});
+  function showPin(msg){try{localStorage.removeItem(PKEY);}catch(e){}PIN='';$('pinMsg').textContent=msg||'';$('pinScreen').hidden=false;$('pinInput').value='';setTimeout(()=>$('pinInput').focus(),50);}
+  async function tryPin(p){const b=$('pinGo');b.disabled=true;b.textContent='Checking…';
+    try{await gsRaw('checkPin',p);PIN=p;try{localStorage.setItem(PKEY,p);}catch(e){}$('pinScreen').hidden=true;startData();}
+    catch(e){const m=errMsg(e);$('pinMsg').textContent=/WRONG_PIN/.test(m)?'Wrong PIN – try again.':m.replace(/^Error:\s*/,'');}
+    finally{b.disabled=false;b.textContent='Unlock';}}
+  const N=10;
+  let state={photos:Array(N).fill(null),sigs:{},parts:5};
+  let reports=[], mode='new', viewing=null, viewData=null, kind='job';
+  const STATUS={complete:'Complete',temp:'Temporary fix',further:'Further work needed'};
+
+  function toast(t){const e=$('toast');e.textContent=t;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),2600);}
+  function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+  // ---------- Parts ----------
+  function addPartRow(){const i=partsBody.children.length;const tr=document.createElement('tr');
+    tr.innerHTML=`<td><input type="text" name="pDesc${i}"></td><td><input type="text" name="pNo${i}"></td><td><input type="text" inputmode="decimal" name="pQty${i}"></td>`;
+    partsBody.appendChild(tr);}
+  function setParts(n){partsBody.innerHTML='';for(let i=0;i<Math.max(1,n||1);i++)addPartRow();}
+  // drop empty rows from the end (keeps at least one) – e.g. older drafts that had 7 blank rows
+  function trimParts(){const rows=[...partsBody.querySelectorAll('tr')];for(let i=rows.length-1;i>0;i--){if([...rows[i].querySelectorAll('input')].some(x=>x.value.trim()))break;rows[i].remove();}}   // start with one row; + Add part row adds more
+
+  // ---------- Photos ----------
+  for(let i=0;i<N;i++){
+    const d=document.createElement('div');d.className='ph';
+    d.innerHTML=`<span class="num">Photo ${i+1}</span>
+      <div class="box" data-i="${i}"><span class="hint">+ Add photo</span><img alt="" hidden>
+        <input type="file" accept="image/*"><button type="button" class="rm" aria-label="Remove photo">×</button></div>
+      <textarea name="cap${i}" placeholder="Describe photo…"></textarea>`;
+    photosEl.appendChild(d);
+  }
+  function showPhoto(i){const box=photosEl.querySelector(`.box[data-i="${i}"]`);const img=box.querySelector('img');const src=state.photos[i];
+    if(src){img.src=src;img.hidden=false;box.classList.add('has');box.querySelector('.hint').hidden=true;}
+    else{img.removeAttribute('src');img.hidden=true;box.classList.remove('has');box.querySelector('.hint').hidden=false;}photoSlots();}
+  function showPhotos(){for(let i=0;i<N;i++)showPhoto(i);}
+  // only show photos already added, plus one empty "+ Add photo" box
+  function photoSlots(){let spare=mode!=='view';photosEl.querySelectorAll('.ph').forEach((ph,i)=>{const has=!!state.photos[i];
+      const show=has||spare;if(!has&&spare)spare=false;ph.hidden=!show;});
+    const n=state.photos.filter(Boolean).length;const h=photosEl.closest('section').querySelector('h2');if(h)h.textContent='Photos'+(n?' ('+n+')':'');}
+  function shrinkURL(src,max,q){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{
+      let w=im.width,h=im.height;const s=Math.min(1,max/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
+      const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);res(c.toDataURL('image/jpeg',q));};
+      im.onerror=rej;im.src=src;});}
+  function squareURL(src,size,q){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{
+      const s=Math.min(im.width,im.height),o=Math.min(size,s);const c=document.createElement('canvas');c.width=o;c.height=o;
+      c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,o,o);res(c.toDataURL('image/jpeg',q));};im.onerror=rej;im.src=src;});}
+  function readFile(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f);});}
+  photosEl.addEventListener('change',async e=>{if(e.target.type!=='file')return;const box=e.target.closest('.box');const i=+box.dataset.i;const f=e.target.files[0];if(!f)return;
+    try{state.photos[i]=await squareURL(await readFile(f),1000,.8);if(state.photoIds)state.photoIds[i]=null;showPhoto(i);save();}catch(err){toast('Could not load that image');}e.target.value='';});
+  photosEl.addEventListener('click',e=>{if(e.target.classList.contains('rm')){e.preventDefault();const i=+e.target.closest('.box').dataset.i;state.photos[i]=null;if(state.photoIds)state.photoIds[i]=null;showPhoto(i);save();}});
+
+  function sizePads(){}
+
+  // ---------- Workers list (edited on the "Workers" tab of the Google Sheet) ----------
+  const WKEY='mayday-workers';
+  const DEFAULT_WORKERS=['Joshua C','Joshua P','David D','Clive P','Drew G','Paul S','Mark D','Andy H','Brad W','Kalon P','Cory S.H','Chance B','Lee P','Eugene B','Chris H','Tim T','Kish K'];
+  let workers=DEFAULT_WORKERS.slice();
+  try{const w=JSON.parse(localStorage.getItem(WKEY)||'null');if(Array.isArray(w)&&w.length)workers=w;}catch(e){}
+  const compSel=$('completedBy');
+  function makeTeam(fm,el,countEl,onChange){
+    const tick=()=>[...el.querySelectorAll('input:checked')].map(i=>i.value);
+    function sync(quiet){const t=tick();el.querySelectorAll('label').forEach(l=>l.classList.toggle('on',l.querySelector('input').checked));
+      el.classList.toggle('any',t.length>0);
+      const other=fm.teamOther.value.split(',').map(x=>x.trim()).filter(Boolean);
+      fm.engineers.value=t.concat(other).join(', ');fm.teamTicked.value=t.join('|');
+      const n=t.length+other.length;countEl.textContent=n>2?'('+n+')':'';
+      const bar=el.closest('.f').querySelector('.tnames');if(bar){const all=t.concat(other);bar.textContent=all.length?all.join(', '):'Tap to choose…';bar.classList.toggle('none',!all.length);}
+      if(!quiet)onChange();}
+    function render(sel){const names=workers.concat(sel.filter(n=>!workers.includes(n)));
+      el.innerHTML=names.map(n=>`<label class="${sel.includes(n)?'on':''}"><input type="checkbox" value="${esc(n)}"${sel.includes(n)?' checked':''}>${esc(n)}</label>`).join('');sync(true);}
+    el.addEventListener('change',e=>{e.stopPropagation();sync();});
+    fm.teamOther.addEventListener('input',()=>sync());
+    return {render,sync};}
+  const jobTeam=makeTeam(form,$('team'),$('teamCount'),()=>save());
+  function renderSel(sel,v){const names=workers.concat(v&&!workers.includes(v)?[v]:[]);
+    sel.innerHTML='<option value="">Choose…</option>'+names.map(n=>`<option${n===v?' selected':''}>${esc(n)}</option>`).join('');sel.value=v||'';}
+  function renderCompleted(v){renderSel(compSel,v);}
+  function applyExtras(f){jobTeam.render(String(f.teamTicked||'').split('|').filter(Boolean));renderCompleted(f.completedBy||'');if(typeof renderChips==='function')renderChips(form);
+    $('notTestedBox').hidden=(f.tested!=='no');}
+  form.addEventListener('change',e=>{if(e.target.name==='status')$('statusBox').classList.remove('missing');});
+  form.addEventListener('change',e=>{if(e.target.name==='tested'){$('notTestedBox').hidden=(e.target.value!=='no');grow();}});
+  async function loadWorkers(){if(!HAS_GS)return;
+    gs('getClients').then(x=>{if(Array.isArray(x)&&x.length){clients=x;try{localStorage.setItem('mayday-clients',JSON.stringify(x));}catch(e){}renderChips(form);renderChips(pform);}}).catch(()=>{});try{const w=await gs('getWorkers');if(Array.isArray(w)&&w.length){
+      workers=w;try{localStorage.setItem(WKEY,JSON.stringify(w));}catch(e){}
+      if(mode==='new'){applyExtras(collect());const pf=collectP();ppmExtras(pf);}}}catch(e){}}
+
+  // team list opens from a small bar and folds away again
+  document.addEventListener('click',e=>{const bar=e.target.closest('.teambar'),done=e.target.closest('.teamdone');
+    if(!bar&&!done)return;const f=(bar||done).closest('.f'),box=f.querySelector('.teambox'),b=f.querySelector('.teambar');
+    const open=bar?box.hidden:false;box.hidden=!open;b.classList.toggle('open',open);if(!open)b.scrollIntoView({block:'nearest'});});
+  function closeTeams(){document.querySelectorAll('.teambox').forEach(x=>x.hidden=true);document.querySelectorAll('.teambar').forEach(x=>x.classList.remove('open'));}
+
+  // ---------- Videos ----------
+  const MAXV=3, MAXVSIZE=1024*1024*1024, CHUNK=2*1024*1024;
+  let videos=[];   // {file, name, size, id, url, cap}
+  const mb=n=>n>=1048576?(n/1048576).toFixed(n>=104857600?0:1)+' MB':Math.max(1,Math.round(n/1024))+' KB';
+  function keepCaps(){videos.forEach((v,i)=>{const t=form['vcap'+i];if(t)v.cap=t.value;});}
+  function renderVideos(){const ro=(mode==='view');
+    $('vidList').innerHTML=videos.map((v,i)=>`<div class="vid"><div class="vrow"><span>🎥 Video ${i+1}${v.name?': '+esc(v.name):''}${v.size?' ('+mb(v.size)+')':''}</span>
+      ${v.url?`<a href="${esc(v.url)}" target="_blank" rel="noopener">Watch</a>`:''}<button type="button" class="vrm" data-i="${i}">Remove</button></div>
+      <textarea name="vcap${i}" placeholder="Describe video…"></textarea></div>`).join('')||(ro?'<p class="vnote">No videos on this report.</p>':'');
+    videos.forEach((v,i)=>{const t=form['vcap'+i];if(t){t.value=v.cap||'';}});
+    $('vidAdd').hidden=ro||videos.length>=MAXV;}
+  $('vidInput').addEventListener('change',e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+    if(f.size>MAXVSIZE){toast('That video is over 1 GB – trim it or record a shorter clip');return;}
+    keepCaps();videos.push({file:f,name:f.name,size:f.size,cap:''});renderVideos();save();
+    if(f.size>300*1024*1024)toast('Big video ('+mb(f.size)+') – it may take a few minutes to upload');});
+  $('vidList').addEventListener('click',e=>{if(!e.target.classList.contains('vrm'))return;keepCaps();videos.splice(+e.target.dataset.i,1);renderVideos();save();});
+  $('vidList').addEventListener('input',e=>{if(e.target.name&&e.target.name.startsWith('vcap'))keepCaps();});
+  function blobB64(b){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(b);});}
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  async function uploadVideo(v,i,onPct){
+    const url=await gs('startVideoUpload',v.name||('Video '+(i+1)),v.file.type||'video/mp4',v.file.size);
+    let res=null,s=0,fails=0;const total=v.file.size;
+    while(s<total){const e=Math.min(s+CHUNK,total);
+      try{const b64=await blobB64(v.file.slice(s,e));res=await gs('uploadVideoChunk',url,b64,s,total);fails=0;
+        if(res&&res.done)return res.id;s=e;onPct(Math.round(e/total*100));}
+      catch(err){if(++fails>4||/expired|Bad upload/i.test(errMsg(err)))throw err;
+        await sleep(2000*fails);
+        try{const st=await gs('videoUploadStatus',url,total);if(st.done)return st.id;s=st.next;}catch(x){}}}
+    const st=await gs('videoUploadStatus',url,total);if(st.done)return st.id;
+    throw new Error('upload did not finish');}
+
+  // ---------- On-phone storage (IndexedDB – holds photos & videos, much bigger than normal storage) ----------
+  const IDB=(()=>{let dbp=null;
+    function open(){if(dbp)return dbp;dbp=new Promise((res,rej)=>{try{const r=indexedDB.open('mayday-reports',1);
+      r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('kv'))d.createObjectStore('kv');if(!d.objectStoreNames.contains('outbox'))d.createObjectStore('outbox',{keyPath:'id'});};
+      r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error||new Error('storage'));}catch(e){rej(e);}});dbp.catch(()=>{dbp=null;});return dbp;}
+    function req(store,mode,make){return open().then(d=>new Promise((res,rej)=>{const t=d.transaction(store,mode);const r=make(t.objectStore(store));
+      t.oncomplete=()=>res(r?r.result:undefined);t.onerror=t.onabort=()=>rej(t.error||new Error('storage'));}));}
+    return {get:k=>req('kv','readonly',s=>s.get(k)),set:(k,v)=>req('kv','readwrite',s=>s.put(v,k)),del:k=>req('kv','readwrite',s=>s.delete(k)),
+      all:()=>req('outbox','readonly',s=>s.getAll()),put:v=>req('outbox','readwrite',s=>s.put(v)),rm:id=>req('outbox','readwrite',s=>s.delete(id))};})();
+  // ask the phone to keep our storage (helps stop iPhone clearing it)
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();}catch(e){}
+
+  // ---------- Outbox: reports wait on the phone until there is signal ----------
+  const isNet=m=>!m||/network|HTTP 0|failed to fetch|timed? ?out|timeout|connection|load failed|offline|unavailable|ScriptError: We're sorry/i.test(m);
+  let obItems=[],running=null,retryT=null,retryDelay=20000;
+  async function sendItem(it,step){
+    const tot=it.photos.filter(Boolean).length;let n=0;
+    for(let i=0;i<it.photos.length;i++){if(!it.photos[i])continue;n++;if(it.up[i])continue;
+      step('Photo '+n+' of '+tot+'…');it.up[i]=await gs('uploadPhoto',it.photos[i]);await IDB.put(it).catch(()=>{});}
+    for(let i=0;i<it.videos.length;i++){const v=it.videos[i];if(v.id||!v.file)continue;
+      step('Video '+(i+1)+'… 0%');v.id=await uploadVideo(v,i,p=>step('Video '+(i+1)+'… '+p+'%'));await IDB.put(it).catch(()=>{});}
+    step(it.emailNow&&it.fields.clientEmail?'Sending & emailing…':'Sending…');
+    return gs('submitReport',{fields:it.fields,parts:it.parts,emailNow:it.emailNow,subId:it.id,
+      videoIds:it.videos.map(v=>v.id).filter(Boolean),photos:it.photos.map((p,i)=>p?(it.up[i]?'tmp:'+it.up[i]:p):null)});}
+  // sends everything waiting, oldest first; opts.watch = an item to report back on, opts.step = progress text for it
+  function runOutbox(opts){opts=opts||{};
+    if(running)return running.then(()=>runOutbox(opts));
+    running=(async()=>{const out={sent:{},failed:{},net:false};
+      if(!HAS_GS||!PIN){out.net=true;return out;}
+      clearTimeout(retryT);
+      try{obItems=((await IDB.all())||[]).sort((a,b)=>a.created-b.created);}catch(e){obItems=[];}
+      for(const it of obItems.slice()){if(it.status==='failed'&&it.id!==opts.watch)continue;
+        it.status='sending';it.error='';renderOutbox();
+        try{const res=await sendItem(it,s=>{it.step=s;renderOutbox();if(it.id===opts.watch&&opts.step)opts.step(s);});
+          await IDB.rm(it.id).catch(()=>{});obItems.splice(obItems.indexOf(it),1);out.sent[it.id]=res;retryDelay=20000;
+          if(it.id!==opts.watch)toast('✅ '+res.reportNo+' sent'+(res.emailed?' & emailed':'')+' from the outbox');}
+        catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');it.step='';
+          if(isNet(m)||/WRONG_PIN|Too many/.test(m)){it.status='waiting';await IDB.put(it).catch(()=>{});out.net=true;break;}
+          it.status='failed';it.error=m;out.failed[it.id]=m;await IDB.put(it).catch(()=>{});}}
+      renderOutbox();
+      if(obItems.some(i=>i.status==='waiting'))scheduleRetry();
+      if(Object.keys(out.sent).length&&(mode==='list'||mode==='home'))refresh();
+      return out;})();
+    return running.finally(()=>{running=null;});}
+  function scheduleRetry(){clearTimeout(retryT);retryT=setTimeout(()=>runOutbox(),retryDelay);retryDelay=Math.min(retryDelay*2,300000);}
+  async function loadOutbox(){try{obItems=((await IDB.all())||[]).sort((a,b)=>a.created-b.created);}catch(e){obItems=[];}renderOutbox();}
+  function renderOutbox(){const el=$('outbox');if(!el)return;const n=obItems.length;el.hidden=!n||mode==='home';if(mode==='home')renderHome();if(!n){el.classList.remove('openp');return;}
+    const sendingIt=obItems.find(i=>i.status==='sending'),failed=obItems.filter(i=>i.status==='failed').length;
+    $('obHead').innerHTML=`<span>📤 <b>${n}</b> report${n>1?'s':''} ${sendingIt?'sending…':failed&&failed===n?(n>1?'need':'needs')+' attention':'waiting to send'}</span>`+
+      `<span class="obsub">${sendingIt?esc(sendingIt.step||''):failed?failed+' couldn\'t send – tap to see':'Sends by itself when you have signal'}</span>`;
+    $('obList').innerHTML=obItems.map(i=>`<div class="obrow" data-id="${esc(i.id)}"><div class="obtxt"><b>${esc(i.label)}</b>
+      <small>${i.status==='sending'?esc(i.step||'Sending…'):i.status==='failed'?'❌ '+esc(i.error):'Waiting for signal · saved '+new Date(i.created).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</small></div>
+      ${i.status==='failed'?'<button type="button" class="obdraft">Edit</button>':''}<button type="button" class="obdel">Delete</button></div>`).join('');}
+  $('obHead').addEventListener('click',()=>$('outbox').classList.toggle('openp'));
+  $('obSend').addEventListener('click',e=>{e.stopPropagation();obItems.forEach(i=>{if(i.status==='failed')i.status='waiting';});retryDelay=20000;
+    Promise.all(obItems.map(i=>IDB.put(i).catch(()=>{}))).then(()=>runOutbox()).then(r=>{if(r&&r.net)toast('Still no signal – will keep trying');});});
+  const obClick=async e=>{const row=e.target.closest('.obrow');if(!row)return;const it=obItems.find(i=>i.id===row.dataset.id);if(!it||it.status==='sending')return;
+    if(e.target.classList.contains('obdel')){if(!e.target.classList.contains('sure')){e.target.classList.add('sure');e.target.textContent='Delete for good?';setTimeout(()=>{e.target.classList.remove('sure');e.target.textContent='Delete';},3000);return;}
+      await IDB.rm(it.id).catch(()=>{});obItems=obItems.filter(i=>i!==it);renderOutbox();toast('Removed from outbox');}
+    if(e.target.classList.contains('obdraft'))outboxToDraft(it);};
+  $('obList').addEventListener('click',obClick);
+  window.addEventListener('online',()=>{retryDelay=20000;runOutbox();});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&obItems.length)runOutbox();});
+
+  // ---------- Form data ----------
+  function collect(){const f={};form.querySelectorAll('input,select,textarea').forEach(el=>{if(!el.name||el.type==='file')return;
+      if(el.type==='checkbox')f[el.name]=el.checked;else if(el.type==='radio'){if(el.checked)f[el.name]=el.value;}else f[el.name]=el.value;});return f;}
+  function fill(fields){form.reset();form.querySelectorAll('input,select,textarea').forEach(el=>{if(!el.name||el.type==='file')return;const v=fields&&fields[el.name];if(v===undefined)return;
+      if(el.type==='checkbox')el.checked=!!v;else if(el.type==='radio')el.checked=(el.value===v);else el.value=(v==null?'':v);});
+    applyExtras(fields||{});}
+  function grow(){document.querySelectorAll('form textarea').forEach(t=>{t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px';});}
+  form.addEventListener('input',e=>{if(e.target.tagName==='TEXTAREA'){e.target.style.height='auto';e.target.style.height=(e.target.scrollHeight+2)+'px';}});
+
+  // ---------- Draft on this phone ----------
+  let saveT;
+  const newSubId=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,10);
+  function save(now){if(mode!=='new'||kind!=='job')return;clearTimeout(saveT);saveT=null;const doSave=()=>{saveT=null;const data={fields:collect(),photos:state.photos,parts:partsBody.children.length,subId:state.subId};
+    IDB.set('draft-job',{subId:state.subId,photos:state.photos,videos:videos.filter(v=>v.file).map(v=>({file:v.file,name:v.name,size:v.size,cap:v.cap||''}))}).catch(()=>{});
+    try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){try{localStorage.setItem(KEY,JSON.stringify({...data,photos:Array(N).fill(null)}));}catch(e2){}}};if(now===true)doSave();else saveT=setTimeout(doSave,300);}
+  function loadDraft(){let d=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}
+    state={photos:(d&&d.photos)||Array(N).fill(null),sigs:(d&&d.sigs)||{},parts:5,subId:(d&&d.subId)||newSubId()};
+    setParts(d&&d.parts);
+    hubNotes.job='';if(d)fill(d.fields);else{const L=lastOf('job');fill(L||{});const t=new Date().toISOString().slice(0,10);form.date.value=t;if(L&&L.client)hubNotes.job='Filled in from your last job ('+[L.client,L.site,L.line].filter(Boolean).join(' · ')+') – change anything that\'s different.';}
+    trimParts();showPhotos();
+    const sid=state.subId;   // bring back photos/videos that were too big for normal storage
+    IDB.get('draft-job').then(x=>{if(!x||x.subId!==sid||state.subId!==sid||mode!=='new'||kind!=='job')return;
+      (x.photos||[]).forEach((p,i)=>{if(p&&!state.photos[i])state.photos[i]=p;});showPhotos();
+      if(x.videos&&x.videos.length&&!videos.some(v=>v.file)){videos=x.videos.map(v=>({file:v.file,name:v.name,size:v.size,cap:v.cap}));renderVideos();}}).catch(()=>{});}
+  const DRAFTED=k=>{try{return localStorage.getItem('mayday-drafted-'+k)==='1';}catch(e){return false;}};
+  const markDraft=(k,on)=>{try{on?localStorage.setItem('mayday-drafted-'+k,'1'):localStorage.removeItem('mayday-drafted-'+k);}catch(e){}};
+  function clearDraft(){markDraft('job',false);clearTimeout(saveT);try{localStorage.removeItem(KEY);}catch(e){}IDB.del('draft-job').catch(()=>{});}
+  form.addEventListener('input',save);form.addEventListener('change',e=>{if(e.target.type!=='file')save();});
+  form.addEventListener('submit',e=>e.preventDefault());
+
+  // ---------- PPM / inspection sheet ----------
+  const PPMKEY='mayday-ppm-v1';
+  const ppmTeam=makeTeam(pform,$('pteam'),$('pteamCount'),()=>psave());
+  let pjobs=[],pk=0,psubId=null,openK=null;
+  const MAXISS=5,PER=MAXISS*2;   // up to 5 issues per inspection, 2 photos each
+  const newIss=x=>({text:(x&&x.text)||'',photos:((x&&x.photos)||[null,null]).slice(0,2),photoIds:((x&&x.photoIds)||[null,null]).slice(0,2)});
+  function newJob(src){src=src||{};let iss=src.issues;
+    if(!iss&&(src.notes||(src.photos&&(src.photos[0]||src.photos[1]))))iss=[{text:src.notes||'',photos:src.photos,photoIds:src.photoIds}];   // older drafts
+    return {k:++pk,wo:src.wo||'',asset:src.asset||src.line||'',motor:src.motor||src.machine||'',issues:(iss||[]).map(newIss)};}
+  // rebuild an inspection from a saved report (photos are stored in fixed slots per inspection)
+  function jobFromSaved(j,i,photos,ids,v){const per=v?PER:2,ph=n=>(photos||[])[i*per+n]||null,id=n=>(ids||[])[i*per+n]||null;
+    const iss=v?(j.issues||[]).map((t,q)=>({text:t||'',photos:[ph(q*2),ph(q*2+1)],photoIds:[id(q*2),id(q*2+1)]}))
+              :((j.notes||ph(0)||ph(1))?[{text:j.notes||'',photos:[ph(0),ph(1)],photoIds:[id(0),id(1)]}]:[]);
+    return newJob({wo:j.wo,asset:j.asset||j.line,motor:j.motor||j.machine,issues:iss});}
+  const issHas=x=>!!(String(x.text||'').trim()||x.photos[0]||x.photos[1]);
+  const jobHas=j=>!j.fresh&&!!(j.wo||j.asset||j.motor||j.issues.some(issHas));
+  const isIssue=j=>j.issues.some(issHas);
+  const nPh=j=>j.issues.reduce((t,x)=>t+(x.photos[0]?1:0)+(x.photos[1]?1:0),0);
+  const idText=j=>[j.wo?(/^wo/i.test(j.wo)?j.wo:'WO '+j.wo):'',j.asset,j.motor].filter(Boolean).join(' · ')||'(no work order / asset)';
+  function miniHtml(j,i){const iss=j.issues.filter(issHas),n=iss.length;
+    const thumbs=mode==='view'?iss.map(x=>x.photos.map(p=>p?`<img class="mthumb" src="${p}" alt="">`:'').join('')).join(''):'';
+    return `<div class="job mini ${n?'r-issue':'r-ok'}" data-k="${j.k}"><button type="button" class="jopen">
+      <span class="jn">${i+1}</span><span class="jtxt"><b>${esc(idText(j))}</b>${iss.map((x,q)=>`<small class="jprob">${n>1?(q+1)+'. ':''}${esc(x.text||'(photo only)')}</small>`).join('')}</span>
+      <span class="jside"><span class="jbadge ${n?'issue':'ok'}">${n?(n>1?'⚠️ '+n+' issues':'⚠️ Issue'):'✅ OK'}</span>${nPh(j)&&mode!=='view'?`<small>📷 ${nPh(j)}</small>`:''}</span></button>${thumbs?`<div class="mthumbs">${thumbs}</div>`:''}</div>`;}
+  function cardHtml(j,i){
+    const ph=x=>[0,1].map(p=>`<div class="box${x.photos[p]?' has':''}" data-p="${p}"${p===1&&!x.photos[0]&&!x.photos[1]?' hidden':''}><span class="hint"${x.photos[p]?' hidden':''}>+ Photo</span><img alt=""${x.photos[p]?` src="${x.photos[p]}"`:' hidden'}>
+      <input type="file" accept="image/*"><button type="button" class="rm" aria-label="Remove photo">×</button></div>`).join('');
+    const many=j.issues.length>1;
+    return `<div class="job open ${j.issues.length?'r-issue':'r-ok'}" data-k="${j.k}"><div class="jhead"><b>Inspection ${i+1}</b>
+      <button type="button" class="jcopy">Copy</button><button type="button" class="jdel">Remove</button></div>
+      <div class="jgrid"><input type="text" class="jwo" placeholder="Work order" value="${esc(j.wo)}" enterkeyhint="next" autocapitalize="characters"><input type="text" class="jasset" placeholder="Asset" value="${esc(j.asset)}" enterkeyhint="next" autocapitalize="characters"></div>
+      <input type="text" class="jmotor" placeholder="Motor / ID number" value="${esc(j.motor)}" enterkeyhint="${j.issues.length?'next':'done'}" autocapitalize="characters">
+      ${j.issues.map((x,q)=>`<div class="jprobbox" data-q="${q}"><div class="plbl"><span>⚠️ ${many?'Issue '+(q+1):'Issue found'}</span><button type="button" class="jissdel">Remove</button></div>
+        <textarea class="jnotes" placeholder="What's the issue?">${esc(x.text)}</textarea><div class="jph">${ph(x)}</div></div>`).join('')}
+      <div class="jfoot">${j.issues.length<MAXISS?`<button type="button" class="jaddprob">${j.issues.length?'+ Add another issue':'⚠️ Issue found'}</button>`:'<span></span>'}<button type="button" class="jdone">Done ✓</button></div></div>`;}
+  function renderJobs(){
+    const ro=mode==='view';
+    jobsEl.innerHTML=pjobs.map((j,i)=>(!ro&&j.k===openK)?cardHtml(j,i):miniHtml(j,i)).join('')||
+      (ro?'<p class="vnote" style="padding:0 0 8px">No inspections on this sheet.</p>':'<p class="jempty">No inspections yet – tap <b>+ Add inspection</b> to start.</p>');
+    $('addJob').textContent=pjobs.length?'+ Add another inspection':'+ Add inspection';
+    updSum();}
+  function updSum(){const list=pjobs.filter(jobHas),n=list.length,iss=list.filter(isIssue).length,ok=n-iss;
+    $('psum').innerHTML=n?`${n} inspection${n>1?'s':''} &nbsp;${ok?`<span class="ok">${ok} OK</span>`:''}${iss?`<span class="issue">${iss} issue${iss>1?'s':''}</span>`:''}`:'';}
+  const jobOf=el=>{const card=el.closest('.job');return card?pjobs.find(j=>j.k===+card.dataset.k):null;};
+  const cardOf=k=>jobsEl.querySelector(`.job[data-k="${k}"]`);
+  function openJob(k,focusSel){
+    pjobs=pjobs.filter(j=>j.k===k||!j.fresh);
+    openK=k;renderJobs();const card=cardOf(k);
+    if(card){card.scrollIntoView({behavior:'smooth',block:'center'});if(focusSel){const el=card.querySelector(focusSel);if(el){el.focus();if(el.select)el.select();}}}}
+  function closeJob(){const j=pjobs.find(x=>x.k===openK);if(j)j.issues=j.issues.filter(issHas);psave(true);
+    openK=null;pjobs=pjobs.filter(x=>!x.fresh);renderJobs();psave();}
+  jobsEl.addEventListener('input',e=>{const j=jobOf(e.target);if(!j)return;const t=e.target;j.fresh=false;
+    if(t.classList.contains('jwo'))j.wo=t.value;else if(t.classList.contains('jasset'))j.asset=t.value;else if(t.classList.contains('jmotor'))j.motor=t.value;
+    else if(t.classList.contains('jnotes')){j.issues[+t.closest('.jprobbox').dataset.q].text=t.value;t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px';}else return;
+    updSum();psave();});
+  jobsEl.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.target.tagName!=='INPUT')return;e.preventDefault();const t=e.target,card=t.closest('.job'),j=jobOf(t);
+    if(t.classList.contains('jwo'))card.querySelector('.jasset').focus();else if(t.classList.contains('jasset'))card.querySelector('.jmotor').focus();
+    else if(t.classList.contains('jmotor')){const ta=card.querySelector('.jnotes');if(ta){ta.focus();}else{t.blur();addJob();}}});   // Enter on the last box = next inspection
+  jobsEl.addEventListener('change',async e=>{e.stopPropagation();const j=jobOf(e.target);if(!j)return;const t=e.target;j.fresh=false;
+    if(t.type==='file'){const f=t.files[0];t.value='';if(!f)return;const box=t.closest('.box'),p=+box.dataset.p;
+      const x=j.issues[+box.closest('.jprobbox').dataset.q];
+      try{x.photos[p]=await squareURL(await readFile(f),800,.75);x.photoIds[p]=null;const img=box.querySelector('img');img.src=x.photos[p];box.parentElement.querySelectorAll('.box').forEach(bx=>bx.hidden=false);img.hidden=false;box.classList.add('has');box.querySelector('.hint').hidden=true;psave();}
+      catch(err){toast('Could not load that image');}}});
+  jobsEl.addEventListener('click',e=>{const t=e.target,j=jobOf(t);if(!j)return;const i=pjobs.indexOf(j);
+    if(t.closest('.jopen')){if(mode==='view')return;openJob(j.k);return;}
+    if(t.classList.contains('rm')){e.preventDefault();const box=t.closest('.box'),p=+box.dataset.p,x=j.issues[+box.closest('.jprobbox').dataset.q];x.photos[p]=null;x.photoIds[p]=null;
+      const img=box.querySelector('img');img.removeAttribute('src');img.hidden=true;box.classList.remove('has');box.querySelector('.hint').hidden=false;psave();return;}
+    if(t.classList.contains('jaddprob')){j.fresh=false;j.issues=j.issues.filter((x,q)=>issHas(x)||q===j.issues.length-1&&false);
+      if(j.issues.length>=MAXISS){toast(MAXISS+' issues is the most on one inspection');return;}
+      j.issues.push(newIss());renderJobs();const tas=cardOf(j.k).querySelectorAll('.jnotes');if(tas.length){tas[tas.length-1].focus();tas[tas.length-1].scrollIntoView({block:'center',behavior:'smooth'});}return;}
+    if(t.classList.contains('jissdel')){const q=+t.closest('.jprobbox').dataset.q;
+      if(issHas(j.issues[q])&&!t.classList.contains('sure')){t.classList.add('sure');t.textContent='Tap to confirm';setTimeout(()=>{t.classList.remove('sure');t.textContent='Remove';},3000);return;}
+      j.issues.splice(q,1);renderJobs();psave();return;}
+    if(t.classList.contains('jdone')){if(j.fresh||!jobHas(j)){j.fresh=true;closeJob();return;}
+      if(!(j.wo||j.asset||j.motor)){cardOf(j.k).classList.add('missing');toast('Add a work order, asset or motor / ID number');return;}closeJob();return;}
+    if(t.classList.contains('jcopy')){const nj=newJob({wo:j.wo,asset:j.asset,motor:j.motor});pjobs.splice(i+1,0,nj);psave();openJob(nj.k,'.jmotor');
+      toast('Copied – change the motor / ID number');return;}
+    if(t.classList.contains('jdel')){if(jobHas(j)&&!t.classList.contains('sure')){t.classList.add('sure');t.textContent='Tap to confirm';setTimeout(()=>{t.classList.remove('sure');t.textContent='Remove';},3000);return;}
+      pjobs.splice(i,1);openK=null;renderJobs();psave();}});
+  function addJob(){if(pjobs.length>=40){toast('40 inspections is the maximum on one sheet');return;}
+    const open=pjobs.find(j=>j.k===openK);
+    if(open&&open.fresh){openJob(open.k,'.jwo');return;}
+    if(open&&jobHas(open)&&!(open.wo||open.asset||open.motor)){cardOf(open.k).classList.add('missing');toast('Add a work order, asset or motor / ID number first');return;}
+    if(open)open.issues=open.issues.filter(issHas);
+    const nj=newJob();nj.fresh=true;pjobs.push(nj);openJob(nj.k,'.jwo');}
+  $('addJob').addEventListener('click',addJob);
+  function collectP(){const f={};pform.querySelectorAll('input[name],select[name],textarea[name]').forEach(el=>{if(el.type==='file')return;
+      if(el.type==='checkbox')f[el.name]=el.checked;else if(el.type==='radio'){if(el.checked)f[el.name]=el.value;}else f[el.name]=el.value;});return f;}
+  function ppmExtras(f){ppmTeam.render(String(f.teamTicked||'').split('|').filter(Boolean));renderSel($('pCompletedBy'),f.completedBy||'');if(typeof renderChips==='function')renderChips(pform);}
+  function fillP(f){pform.reset();pform.querySelectorAll('input[name],select[name],textarea[name]').forEach(el=>{if(el.type==='file')return;const v=f&&f[el.name];if(v===undefined)return;
+      if(el.type==='checkbox')el.checked=!!v;else el.value=(v==null?'':v);});ppmExtras(f||{});}
+  let psaveT;
+  function psave(now){if(mode!=='new'||kind!=='ppm')return;clearTimeout(psaveT);psaveT=null;const doSave=()=>{psaveT=null;
+    const d={fields:collectP(),jobs:pjobs.filter(jobHas).map(j=>({wo:j.wo,asset:j.asset,motor:j.motor,issues:j.issues.map(x=>({text:x.text,photos:x.photos}))})),subId:psubId};
+    IDB.set('draft-ppm',{subId:psubId,photos:d.jobs.map(j=>j.issues.map(x=>x.photos))}).catch(()=>{});
+    try{localStorage.setItem(PPMKEY,JSON.stringify(d));}catch(e){try{d.jobs.forEach(j=>j.issues.forEach(x=>x.photos=[null,null]));localStorage.setItem(PPMKEY,JSON.stringify(d));}catch(e2){}}};if(now===true)doSave();else psaveT=setTimeout(doSave,250);}
+  function clearPpmDraft(){markDraft('ppm',false);clearTimeout(psaveT);try{localStorage.removeItem(PPMKEY);}catch(e){}IDB.del('draft-ppm').catch(()=>{});}
+  function loadPpmDraft(){let d=null;try{d=JSON.parse(localStorage.getItem(PPMKEY)||'null');}catch(e){}
+    psubId=(d&&d.subId)||newSubId();openK=null;hubNotes.ppm='';
+    if(d){fillP(d.fields);pjobs=(d.jobs||[]).map(newJob);}
+    else{const L=lastOf('ppm');fillP(L||{});const t=new Date().toISOString().slice(0,10);pform.date.value=t;pjobs=[];if(L&&L.client)hubNotes.ppm='Filled in from your last PPM ('+[L.client,L.site].filter(Boolean).join(' · ')+') – change anything that\'s different.';}
+    renderJobs();
+    const sid=psubId;
+    IDB.get('draft-ppm').then(x=>{if(!x||x.subId!==sid||psubId!==sid)return;let ch=false;
+      (x.photos||[]).forEach((ps,i)=>{const j=pjobs[i];if(!j||!ps)return;
+        (Array.isArray(ps[0])||ps[0]==null&&Array.isArray(ps[1])?ps:[ps]).forEach((pp,q)=>{const s=j.issues[q];if(!s||!pp)return;[0,1].forEach(p=>{if(pp[p]&&!s.photos[p]){s.photos[p]=pp[p];ch=true;}});});});
+      if(ch)renderJobs();}).catch(()=>{});}
+  pform.addEventListener('input',e=>{if(!e.target.closest('#jobs'))psave();});
+  pform.addEventListener('change',e=>{if(!e.target.closest('#jobs')&&e.target.type!=='file')psave();});
+  pform.addEventListener('submit',e=>e.preventDefault());
+
+  async function ppmSubmit(){if(busy)return;
+    const f=collectP(),jobs=pjobs.filter(jobHas);
+    jobsEl.querySelectorAll('.job.missing').forEach(x=>x.classList.remove('missing'));
+    if(!jobs.length){showStep(2);toast('Add at least one inspection');return;}
+    const miss=jobs.find(j=>!(j.wo||j.asset||j.motor));
+    if(miss){showStep(2,true);openJob(miss.k);const card=cardOf(miss.k);if(card)card.classList.add('missing');
+      toast('Inspection '+(pjobs.indexOf(miss)+1)+' needs a work order, asset or motor / ID number');return;}
+    if(f.emailNow&&f.clientEmail&&!/^[^@\s]+@[^@\s]+\.[^@\s]+/.test(f.clientEmail)){toast("Client email doesn't look right");return;}
+    const editing=(mode==='edit'),idleLabel=editing?'Save changes':'Save report';
+    busy=true;const btn=$('submitBtn');btn.disabled=true;btn.textContent=(editing?'Saving':'Sending')+(f.emailNow&&f.clientEmail?' & emailing…':'…');
+    try{
+      f.kind='ppm';f.issuesV=1;
+      jobs.forEach(j=>{j.issues=j.issues.filter(issHas);});
+      f.jobs=jobs.map(j=>{const n=j.issues.length;return {wo:j.wo,asset:j.asset,motor:j.motor,issues:j.issues.map(x=>x.text.trim()),
+        notes:j.issues.map((x,q)=>(n>1?(q+1)+') ':'')+(x.text.trim()||'see photo')).join('\n'),result:n?'issue':'ok'};});
+      const slots=pick=>[].concat(...jobs.map(j=>{const a=[];for(let q=0;q<MAXISS;q++)for(let p=0;p<2;p++){const x=j.issues[q];a.push(x?pick(x,p):null);}return a;}));
+      if(!editing){const ph=slots((x,p)=>x.photos[p]||null);
+        await submitNew({id:psubId||newSubId(),kind:'ppm',label:['PPM sheet',f.client,f.site,jobs.length+' inspection'+(jobs.length>1?'s':'')].filter(Boolean).join(' · '),
+          fields:f,parts:0,emailNow:!!f.emailNow,photos:ph,up:ph.map(()=>null),videos:[]},btn);return;}
+      const payload={fields:f,emailNow:!!f.emailNow,photos:slots((x,p)=>x.photoIds[p]?'id:'+x.photoIds[p]:(x.photos[p]||null))};
+      let res;
+      if(editing){payload.id=viewing;res=await gs('updateReport',payload);editDrop();}
+      else{payload.subId=psubId;res=await gs('submitReport',payload);clearPpmDraft();}
+      let msg='PPM sheet '+res.reportNo+(editing?' saved':' submitted');
+      if(!res.pdf)msg+=' – but the PDF failed';else if(res.emailed)msg+=' & emailed to '+res.emailed;else if(res.emailError)msg+=' – email failed: '+res.emailError;else msg+=' – PDF saved';
+      toast(msg);await refresh();openReport(res.id);
+    }catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');const net=!m||/network|HTTP 0|failed to fetch|timed? ?out|connection/i.test(m);
+      toast(net?(editing?'No signal – could not save. Try again when you have signal.':'No signal – could not send. Your sheet is saved on this phone; press Save report again when you have signal.'):m);}
+    finally{busy=false;btn.disabled=false;btn.textContent=idleLabel;}}
+
+  // ---------- Sections: overview cards + one section at a time ----------
+  const USE_STEPS=false;   // true = overview + one section at a time; false = one full form
+  const STEPS={job:[['🏭','Client & job'],['🔧','Work done'],['📷','Photos, videos & parts'],['🦺','Safety & status'],['📤','Finish & send']],
+               ppm:[['🏭','Visit details'],['🔍','Inspections'],['📤','Finish & send']]};
+  let step=0;const hubNotes={job:'',ppm:''};
+  const plural=(n,w)=>n+' '+w+(n===1?'':'s');
+  function jobInfo(){const f=collect();const ph=state.photos.filter(Boolean).length,vd=videos.length;
+    const pt=[...partsBody.querySelectorAll('tr')].filter(r=>[...r.querySelectorAll('input')].some(i=>i.value.trim())).length;
+    const sf=['loto','confined','hotwork','height','guards','safeHandover'].filter(k=>f[k]).length;
+    return [{sum:[f.client,f.site,f.line,f.machine].filter(Boolean).join(' · ')||'Client, site, line, machine, team',done:!!(f.client||f.jobNo)},
+      {sum:(f.workDone||f.requested||'').replace(/\s+/g,' ').slice(0,70)||'What was wrong and what you did',done:!!(f.workDone||f.requested)},
+      {sum:[ph?plural(ph,'photo'):'',vd?plural(vd,'video'):'',pt?plural(pt,'part'):''].filter(Boolean).join(' · ')||'Optional',done:!!(ph||vd||pt)},
+      {sum:f.status?STATUS[f.status]+(sf?' · '+sf+' safety ticked':''):'Job status needed',done:!!f.status,need:!f.status},
+      {sum:[f.completedBy,f.emailNow&&f.clientEmail?'email to '+f.clientEmail:''].filter(Boolean).join(' · ')||'Your name and who gets the PDF',done:!!f.completedBy}];}
+  function ppmInfo(){const f=collectP();const list=pjobs.filter(jobHas),iss=list.filter(isIssue).length;
+    return [{sum:[f.client,f.site,f.permit?'permit '+f.permit:''].filter(Boolean).join(' · ')||'Client, site, permit, team',done:!!(f.client||f.site)},
+      {sum:list.length?plural(list.length,'inspection')+(iss?' · '+plural(iss,'issue'):' · all OK'):'Add your inspections',done:list.length>0,need:!list.length},
+      {sum:[f.completedBy,f.emailNow&&f.clientEmail?'email to '+f.clientEmail:''].filter(Boolean).join(' · ')||'Your name and who gets the PDF',done:!!f.completedBy}];}
+  function renderHub(){const ppm=kind==='ppm',hub=ppm?$('phub'):$('hub'),S=STEPS[ppm?'ppm':'job'],info=ppm?ppmInfo():jobInfo();
+    const dn=info.filter(x=>x.done).length,note=mode==='new'?hubNotes[kind]:'';
+    hub.innerHTML=(note?`<div class="hubnote">${esc(note)}</div>`:'')+`<div class="hprog"><i style="width:${Math.round(dn/info.length*100)}%"></i></div>`+
+      S.map((s,i)=>{const x=info[i];return `<button type="button" class="hcard${x.done?' done':''}${x.need?' need':''}" data-go="${i+1}"><span class="hi">${x.done?'✓':s[0]}</span><span class="ht"><b>${s[1]}</b><small>${esc(x.sum)}</small></span><span class="go">›</span></button>`;}).join('');}
+  function showStep(n,quiet){step=n;
+    if(!USE_STEPS){document.body.classList.remove('athub');   // one full form: just scroll to the part that needs attention
+      if(n&&!quiet){const sec=curForm().querySelector('section[data-step="'+n+'"]');if(sec)sec.scrollIntoView({behavior:'smooth',block:'start'});}return;}const fm=curForm(),S=STEPS[kind==='ppm'?'ppm':'job'];
+    document.body.classList.toggle('athub',n===0);
+    fm.querySelectorAll('section[data-step]').forEach(sec=>sec.classList.toggle('cur',+sec.dataset.step===n));
+    let first=true;fm.querySelectorAll('section[data-step] .stepcount').forEach(el=>{const on=n&&el.closest('section').classList.contains('cur')&&first;
+      if(on)first=false;el.textContent=on?'Step '+n+' of '+S.length+' · '+S[n-1][1]:'';el.style.display=on?'':'none';});
+    fm.querySelector('.stepnav').innerHTML=n?`<button type="button" class="back">‹ Overview</button><button type="button" class="next">${n<S.length?'Save & next ›':'✓ Done'}</button>`:'';
+    if(n===0)renderHub();
+    if(!quiet)window.scrollTo(0,0);
+    requestAnimationFrame(grow);}
+  document.addEventListener('click',e=>{const c=e.target.closest('.hcard');if(c){showStep(+c.dataset.go);return;}
+    const nb=e.target.closest('.stepnav button');if(!nb)return;const S=STEPS[kind==='ppm'?'ppm':'job'];
+    if(nb.classList.contains('back')||step>=S.length){if(kind==='ppm'&&openK!=null)closeJob();showStep(0);return;}
+    if(kind==='ppm'&&openK!=null)closeJob();showStep(step+1);});
+  function reveal(el){const sec=el&&el.closest('section[data-step]');if(sec&&document.body.classList.contains('hubmode'))showStep(+sec.dataset.step,true);}
+
+  // ---------- Client & site buttons (edit the list on the "Clients" tab of the Google Sheet) ----------
+  const DEFAULT_CLIENTS=[['Walkers',['Bursom','Leycroft','Coventry']],['McCain',['Peterborough','Scarborough']],['Mayday',['Unit']]];
+  let clients=DEFAULT_CLIENTS;try{const x=JSON.parse(localStorage.getItem('mayday-clients')||'null');if(Array.isArray(x)&&x.length)clients=x;}catch(e){}
+  function renderChips(fm){const cv=fm.client.value.trim().toLowerCase(),sv=fm.site.value.trim().toLowerCase();
+    const cBox=fm.querySelector('.chips[data-for=client]'),sBox=fm.querySelector('.chips[data-for=site]');if(!cBox)return;
+    const cl=clients.find(c=>c[0].toLowerCase()===cv),sm=cl&&cl[1].find(x=>x.toLowerCase()===sv);
+    cBox.innerHTML=clients.map(c=>`<button type="button" data-v="${esc(c[0])}" class="${c[0].toLowerCase()===cv?'on':''}">${esc(c[0])}</button>`).join('')+`<button type="button" class="other" data-other="client">Other…</button>`;
+    sBox.innerHTML=cl&&cl[1].length?cl[1].map(x=>`<button type="button" data-v="${esc(x)}" class="${x.toLowerCase()===sv?'on':''}">${esc(x)}</button>`).join('')+`<button type="button" class="other" data-other="site">Other…</button>`:'';
+    // when a button is picked the typing box hides, so the screen stays short
+    fm.client.classList.toggle('chipfilled',!!cl&&!fm.client.dataset.typing);fm.site.classList.toggle('chipfilled',!!sm&&!fm.site.dataset.typing);}
+  document.addEventListener('click',e=>{const b=e.target.closest('.chips button');if(!b)return;const box=b.parentElement,fm=b.closest('form');
+    if(fm.querySelector('fieldset').disabled)return;const inp=fm[box.dataset.for],v=b.dataset.v;
+    if(b.dataset.other){inp.dataset.typing='1';inp.value='';if(box.dataset.for==='client')fm.site.value='';inp.dispatchEvent(new Event('input',{bubbles:true}));renderChips(fm);inp.classList.remove('chipfilled');inp.focus();return;}
+    delete inp.dataset.typing;
+    inp.value=(inp.value===v)?'':v;
+    if(box.dataset.for==='client'){const cl=clients.find(c=>c[0]===inp.value);if(fm.site.value&&!(cl&&cl[1].includes(fm.site.value)))fm.site.value='';}
+    inp.dispatchEvent(new Event('input',{bubbles:true}));renderChips(fm);});
+  [form,pform].forEach(fm=>{fm.client.addEventListener('input',()=>renderChips(fm));fm.site.addEventListener('input',()=>renderChips(fm));
+    fm.client.addEventListener('blur',()=>{delete fm.client.dataset.typing;renderChips(fm);});fm.site.addEventListener('blur',()=>{delete fm.site.dataset.typing;renderChips(fm);});});
+
+  // ---------- Remember the last job so the next one is mostly filled in ----------
+  const LASTKEY={job:'mayday-last-job',ppm:'mayday-last-ppm'};
+  function rememberLast(item){const f=item.fields||{},o={};
+    (item.kind==='ppm'?['client','site','area','engineers','teamTicked','teamOther','completedBy']:['client','site','area','line','contact','engineers','teamTicked','teamOther','completedBy'])
+      .forEach(k=>{if(f[k])o[k]=f[k];});try{localStorage.setItem(LASTKEY[item.kind],JSON.stringify(o));}catch(e){}}
+  function lastOf(k){try{return JSON.parse(localStorage.getItem(LASTKEY[k])||'null');}catch(e){return null;}}
+
+  // ---------- Home screen ----------
+  function renderHome(){let d=null,p=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null');p=JSON.parse(localStorage.getItem(PPMKEY)||'null');}catch(e){}
+    const jf=d&&d.fields||{},jh=!!d&&(DRAFTED('job')||!!(jf.workDone||jf.jobNo||jf.requested||jf.status||(d&&d.photos||[]).some(Boolean)));
+    const jd=$('homeJobDraft');jd.textContent=jh?'Continue draft · '+([jf.client,jf.line||jf.machine].filter(Boolean).join(' · ')||'in progress'):'Breakdowns, repairs, installs';jd.classList.toggle('draft',jh);
+    const pn=p&&p.jobs?p.jobs.length:0,pdr=!!p&&DRAFTED('ppm')&&!pn,pd=$('homePpmDraft');pd.textContent=pn?'Continue draft · '+[p.fields&&p.fields.client,plural(pn,'inspection')].filter(Boolean).join(' · '):'A round of quick inspections';pd.classList.toggle('draft',!!pn);
+    // drafts and the outbox – things only on this phone
+    const tm=x=>new Date(x).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    let loc='';
+    if(jh)loc+=`<div class="obrow"><button type="button" class="hrow" data-open="job"><span><b>🔧 Job report draft</b><small>${esc([jf.client,jf.site,jf.line||jf.machine].filter(Boolean).join(' · ')||'Not sent – only on this phone')}</small></span><span class="tagd">Draft</span></button></div>`;
+    if(pn||pdr)loc+=`<div class="obrow"><button type="button" class="hrow" data-open="ppm"><span><b>📋 PPM sheet draft</b><small>${esc([p.fields&&p.fields.client,p.fields&&p.fields.site,pn?plural(pn,'inspection'):'No inspections yet'].filter(Boolean).join(' · '))}</small></span><span class="tagd">Draft</span></button></div>`;
+    if(editSnap)loc+=`<div class="obrow"><button type="button" class="hrow" data-open="edit"><span><b>✏️ Changes to ${esc(editSnap.no)}</b><small>Not saved yet – tap to carry on</small></span><span class="tagd">Not saved</span></button></div>`;
+    loc+=obItems.map(i=>`<div class="obrow" data-id="${esc(i.id)}"><span class="hrow" style="cursor:default"><span><b>📤 ${esc(i.label)}</b>
+      <small>${i.status==='sending'?esc(i.step||'Sending…'):i.status==='failed'?'❌ '+esc(i.error):'No signal yet – sends by itself · saved '+tm(i.created)}</small></span>
+      <span class="tagd ${i.status==='failed'?'tagf':'tago'}">${i.status==='sending'?'Sending':i.status==='failed'?'Not sent':'Waiting'}</span></span>
+      ${i.status==='failed'?'<button type="button" class="obdraft">Edit</button>':''}${i.status!=='sending'?'<button type="button" class="obdel">Delete</button>':''}</div>`).join('');
+    $('homeLocal').innerHTML=loc;$('homeLocalSec').hidden=!loc;$('homeSend').hidden=!obItems.some(i=>i.status!=='sending');
+    const t=new Date(),iso=t.toISOString().slice(0,10),uk=t.toLocaleDateString('en-GB');
+    const rows=reports.filter(r=>r.date===iso||String(r.submitted||'').indexOf(uk)===0).slice(0,8);
+    $('homeToday').innerHTML=rows.length?rows.map(r=>{const st=r.status||'';return `<button type="button" class="hrow" data-id="${esc(r.id)}"><span><b>${r.kind==='ppm'?'📋 ':''}${esc(r.reportNo)} · ${esc(r.client||'')}</b>
+      <small>${esc(r.kind==='ppm'?(r.machine||r.site||''):[r.line,r.machine].filter(Boolean).join(' · '))}</small></span><span class="pill ${st==='complete'?'':st||'none'}">${esc(STATUS[st]||'')}</span></button>`;}).join(''):'<p class="hnone">Nothing saved today yet.</p>';}
+  $('homeLocal').addEventListener('click',e=>{const o=e.target.closest('[data-open]');if(o){if(o.dataset.open==='edit'){resumeEdit();return;}$(o.dataset.open==='ppm'?'tabPpm':'tabNew').click();return;}obClick(e);});
+  $('homeSend').addEventListener('click',e=>$('obSend').click());
+  $('homeToday').addEventListener('click',e=>{const r=e.target.closest('.hrow');if(r)openReport(r.dataset.id);});
+  $('homeAll').addEventListener('click',()=>{setMode('list');refresh();});
+  $('tabHome').addEventListener('click',async()=>{if(mode==='settings'&&sDirty&&!await ask('You haven\'t saved your changes to the lists. Leave without saving?','Leave','Stay'))return;
+    if(mode==='edit'){editSave(true);toast('Your changes are kept on this phone – carry on from Home');}
+    if(selecting)endSelect();if(mode==='new'&&kind==='job')keepCaps();viewing=null;setMode('home');refresh();});
+
+  // ---------- Settings: team names, clients & sites ----------
+  let sWork=[],sCli=[],sDirty=false;
+  function setDirty(d){sDirty=d;$('setSave').disabled=!d;$('setSave').textContent=d?'Save changes':'Saved';}
+  function openSettings(){if(selecting)endSelect();viewing=null;sWork=workers.slice();sCli=clients.map(c=>[c[0],c[1].slice()]);
+    $('setAdminRow').hidden=true;$('setAdminPin').value='';$('setMsg').textContent=HAS_GS?'':'Lists can only be changed with signal.';
+    renderSettings();setDirty(false);setMode('settings');}
+  const tagHtml=(t,a)=>`<span class="tag">${esc(t)}<button type="button" ${a} aria-label="Remove ${esc(t)}">×</button></span>`;
+  function renderSettings(){
+    $('setTeam').innerHTML=sWork.map((n,i)=>tagHtml(n,`data-rmname="${i}"`)).join('')||'<p class="shint">No names yet.</p>';
+    $('setClients').innerHTML=sCli.map((c,i)=>`<div class="cli" data-c="${i}"><div class="clihead"><b>${esc(c[0])}</b><button type="button" data-rmcli="${i}">Remove client</button></div>
+      <div class="taglist">${c[1].map((s,k)=>tagHtml(s,`data-rmsite="${k}"`)).join('')||'<span class="shint">No sites yet</span>'}</div>
+      <div class="addrow"><input type="text" class="newsite" placeholder="Add a site" autocapitalize="words" enterkeyhint="done"><button type="button" data-addsite="${i}">Add</button></div></div>`).join('');}
+  const twoTap=b=>{if(b.classList.contains('sure'))return true;b.classList.add('sure');const t=b.textContent;b.textContent=b.textContent==='×'?'✓':'Tap to confirm';setTimeout(()=>{b.classList.remove('sure');b.textContent=t;},2500);return false;};
+  function addName(){const v=$('newName').value.replace(/\s+/g,' ').trim();if(!v)return;
+    if(sWork.some(n=>n.toLowerCase()===v.toLowerCase())){toast(v+' is already on the list');return;}sWork.push(v);$('newName').value='';renderSettings();setDirty(true);$('newName').focus();}
+  function addClient(){const v=$('newClient').value.replace(/\s+/g,' ').trim();if(!v)return;
+    if(sCli.some(c=>c[0].toLowerCase()===v.toLowerCase())){toast(v+' is already on the list');return;}sCli.push([v,[]]);$('newClient').value='';renderSettings();setDirty(true);
+    const ins=$('setClients').querySelectorAll('.newsite');if(ins.length)ins[ins.length-1].focus();}
+  function addSite(i,inp){const v=inp.value.replace(/\s+/g,' ').replace(/,/g,' ').trim();if(!v)return;
+    if(sCli[i][1].some(s=>s.toLowerCase()===v.toLowerCase())){toast(v+' is already there');return;}sCli[i][1].push(v);renderSettings();setDirty(true);
+    const again=$('setClients').querySelector(`.cli[data-c="${i}"] .newsite`);if(again)again.focus();}
+  $('addName').addEventListener('click',addName);$('addClient').addEventListener('click',addClient);
+  $('newName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addName();}});
+  $('newClient').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addClient();}});
+  $('setView').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.classList.contains('newsite')){e.preventDefault();addSite(+e.target.closest('.cli').dataset.c,e.target);}});
+  $('setView').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.rmname!=null){if(!twoTap(b))return;sWork.splice(+b.dataset.rmname,1);renderSettings();setDirty(true);}
+    else if(b.dataset.rmsite!=null){const i=+b.closest('.cli').dataset.c;sCli[i][1].splice(+b.dataset.rmsite,1);renderSettings();setDirty(true);}
+    else if(b.dataset.rmcli!=null){if(!twoTap(b))return;sCli.splice(+b.dataset.rmcli,1);renderSettings();setDirty(true);}
+    else if(b.dataset.addsite!=null){addSite(+b.dataset.addsite,b.previousElementSibling);}});
+  $('setSave').addEventListener('click',async()=>{if(!sDirty)return;
+    if($('newName').value.trim())addName();if($('newClient').value.trim())addClient();
+    if(!sWork.length){toast('Keep at least one name on the list');return;}
+    const b=$('setSave');b.disabled=true;b.textContent='Saving…';const ap=$('setAdminPin').value.trim();
+    try{const w=await gs('saveWorkers',sWork,ap);const cl=await gs('saveClients',sCli,ap);
+      workers=w;clients=cl;try{localStorage.setItem(WKEY,JSON.stringify(w));localStorage.setItem('mayday-clients',JSON.stringify(cl));}catch(e){}
+      applyExtras(collect());ppmExtras(collectP());renderChips(form);renderChips(pform);
+      sWork=w.slice();sCli=cl.map(c=>[c[0],c[1].slice()]);renderSettings();setDirty(false);$('setAdminRow').hidden=true;
+      toast('Saved – everyone gets the new lists next time they open the app');}
+    catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');b.disabled=false;b.textContent='Save changes';
+      if(/ADMIN_PIN_REQUIRED/.test(m)){$('setAdminRow').hidden=false;$('setAdminPin').focus();toast('Enter the manager PIN, then press Save');}
+      else toast(isNet(m)?'No signal – could not save the lists. Try again when you have signal.':m);}});
+  $('tabSet').addEventListener('click',openSettings);
+
+  // ---------- Simple yes/no question ----------
+  function ask(text,yes,no){return new Promise(res=>{const m=$('askModal');$('askText').textContent=text;$('askYes').textContent=yes||'OK';$('askNo').textContent=no||'Cancel';
+    const done=v=>{m.classList.remove('show');$('askYes').onclick=$('askNo').onclick=null;res(v);};$('askYes').onclick=()=>done(true);$('askNo').onclick=()=>done(false);m.classList.add('show');});}
+  const jobDraftHas=()=>{let d=null;try{d=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}if(!d)return false;const f=d.fields||{};
+    return DRAFTED('job')||!!(f.workDone||f.jobNo||f.requested||f.status||f.cause||f.fault)||(d.photos||[]).some(Boolean);};
+  const ppmDraftHas=()=>{let p=null;try{p=JSON.parse(localStorage.getItem(PPMKEY)||'null');}catch(e){}return !!p&&(DRAFTED('ppm')||(p.jobs||[]).length>0);};
+  // before something would replace an unsaved draft, check first
+  async function okToReplaceDraft(k){if(!(k==='ppm'?ppmDraftHas():jobDraftHas()))return true;
+    return ask('You already have a '+(k==='ppm'?'PPM sheet':'job report')+' draft on this phone that hasn\'t been saved. Replace it? The draft will be lost.','Replace draft','Keep my draft');}
+
+  // ---------- Unsaved changes to a saved report – kept on the phone until saved or thrown away ----------
+  function editSnapshot(){if(mode!=='edit'||!viewing)return null;const no=(viewData&&viewData.fields&&viewData.fields.reportNo)||'report';
+    if(kind==='ppm')return {id:viewing,kind:'ppm',no,at:Date.now(),fields:collectP(),pjobs:JSON.parse(JSON.stringify(pjobs))};
+    keepCaps();return {id:viewing,kind:'job',no,at:Date.now(),fields:collect(),photos:state.photos.slice(),photoIds:(state.photoIds||[]).slice(),parts:partsBody.children.length,
+      videos:videos.map(v=>({id:v.id||null,url:v.url||'',cap:v.cap||'',name:v.name||'',size:v.size||0,file:v.file||null}))};}
+  function editSave(now){if(mode!=='edit')return;editDirty=true;clearTimeout(editT);
+    const go=()=>{editT=null;editDirty=false;const s=editSnapshot();if(!s)return;editSnap={id:s.id,kind:s.kind,no:s.no,at:s.at};
+      try{localStorage.setItem('mayday-edit',JSON.stringify(editSnap));}catch(e){}IDB.set('edit',s).catch(()=>{});};
+    if(now===true)go();else editT=setTimeout(go,700);}
+  function editDrop(){clearTimeout(editT);editT=null;editDirty=false;editSnap=null;try{localStorage.removeItem('mayday-edit');}catch(e){}IDB.del('edit').catch(()=>{});}
+  ['input','change'].forEach(ev=>{form.addEventListener(ev,()=>editSave());pform.addEventListener(ev,()=>editSave());});
+  pform.addEventListener('click',e=>{if(mode==='edit'&&e.target.closest('button'))editSave();});
+  form.addEventListener('click',e=>{if(mode==='edit'&&e.target.closest('button'))editSave();});
+  setInterval(()=>{if(mode==='edit'&&editDirty&&!editT)editSave(true);},4000);   // photos finish shrinking after the tap – catch them too
+  async function resumeEdit(){const s=await IDB.get('edit').catch(()=>null);
+    if(!s){editDrop();renderHome();toast('Those changes could not be found on this phone');return;}
+    await openReport(s.id);if(viewing!==s.id||!viewData){toast('Could not open '+s.no+' – check signal and try again. Your changes are still kept.');return;}
+    editSnap=null;$('vEdit').click();
+    if(s.kind==='ppm'){fillP(s.fields);pjobs=s.pjobs||[];pk=Math.max(pk,...pjobs.map(j=>j.k||0));openK=null;renderJobs();}
+    else{state.photos=s.photos;state.photoIds=s.photoIds;setParts(s.parts);fill(s.fields);showPhotos();videos=s.videos||[];renderVideos();grow();}
+    editSave(true);toast('Your unsaved changes to '+s.no+' are back – press Save changes when you\'re done');}
+
+  // in a saved report, don't show empty photo / video / parts boxes
+  function roEmpty(){
+    // hide empty boxes when looking at a saved report so it reads cleanly
+    const view=mode==='view';
+    document.querySelectorAll('#form .f,#ppmForm .f').forEach(f=>{let empty=view;
+      if(view){if(f.querySelector('.photos,.vids,#jobs,table,.sig'))empty=false;
+        else f.querySelectorAll('input,textarea,select').forEach(i=>{if(i.type==='checkbox'||i.type==='radio'){if(i.checked)empty=false;}else if(i.type!=='file'&&i.type!=='hidden'&&String(i.value||'').trim())empty=false;});}
+      f.classList.toggle('roempty',empty);});
+    document.querySelectorAll('#form section,#ppmForm section').forEach(sec=>{const fs_=sec.querySelectorAll('.f');
+      sec.classList.toggle('roempty',view&&fs_.length>0&&!sec.querySelector('#jobs,.photos,.vids,table')&&[...fs_].every(f=>f.classList.contains('roempty')));});
+    if(view)requestAnimationFrame(grow);
+    const ro=view&&kind!=='ppm';
+    const ph=$('photos').closest('section'),vs=$('videoSec'),pt=partsBody.closest('section');
+    ph.classList.toggle('roempty',ro&&!state.photos.some(Boolean));vs.classList.toggle('roempty',ro&&!videos.length);
+    pt.classList.toggle('roempty',ro&&![...partsBody.querySelectorAll('input')].some(i=>i.value.trim()));}
+
+  // ---------- Bottom bar: Draft and More ----------
+  let emailAfter=false;
+  function sheet(open){$('moreSheet').hidden=!open;$('moreBack').hidden=!open;}
+  $('moreBtn').addEventListener('click',()=>sheet(true));$('barPdf').addEventListener('click',()=>$('pdfBtn').click());
+  $('moreBack').addEventListener('click',()=>sheet(false));$('moreClose').addEventListener('click',()=>sheet(false));
+  $('moreSheet').addEventListener('click',e=>{if(e.target.closest('button'))sheet(false);},true);
+  $('draftBtn').addEventListener('click',()=>{if(kind==='ppm'){psave(true);markDraft('ppm',true);}else{keepCaps();save(true);markDraft('job',true);}
+    toast('💾 Draft saved on this phone only – open it again from Home');$('tabHome').click();});
+  $('mEmail').addEventListener('click',()=>{if(mode==='view'){$('vEmail').click();return;}
+    if(mode!=='new')return;emailAfter=true;$('submitBtn').click();emailAfter=false;});
+  function pdfPayload(){
+    if(kind!=='ppm'){keepCaps();return {fields:collect(),photos:state.photos.map((p,i)=>state.photoIds&&state.photoIds[i]?'id:'+state.photoIds[i]:p)};}
+    const f=collectP();f.kind='ppm';f.issuesV=1;
+    const js=pjobs.filter(jobHas).map(j=>Object.assign({},j,{issues:j.issues.filter(issHas)}));
+    f.jobs=js.map(j=>{const n=j.issues.length;return {wo:j.wo,asset:j.asset,motor:j.motor,issues:j.issues.map(x=>x.text.trim()),
+      notes:j.issues.map((x,q)=>(n>1?(q+1)+') ':'')+(x.text.trim()||'see photo')).join('\n'),result:n?'issue':'ok'};});
+    const ph=[].concat(...js.map(j=>{const a=[];for(let q=0;q<MAXISS;q++)for(let p=0;p<2;p++){const x=j.issues[q];a.push(!x?null:(x.photoIds&&x.photoIds[p]?'id:'+x.photoIds[p]:(x.photos[p]||null)));}return a;}));
+    return {fields:f,photos:ph};}
+  function saveFile(res){
+    if(res.html&&window.__demoOpenDoc){window.__demoOpenDoc(res.name,res.html);return;}
+    const bin=atob(res.b64||''),u8=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);
+    const url=URL.createObjectURL(new Blob([u8],{type:'application/pdf'}));
+    const a=document.createElement('a');a.href=url;a.download=res.name||'report.pdf';document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),120000);toast('⬇️ '+(res.name||'PDF')+' downloaded');}
+  $('pdfBtn').addEventListener('click',async()=>{if(mode==='view'&&!viewing)return;toast('Making the PDF…');
+    try{const res=mode==='view'?await gs('getPdf',viewing):await gs('previewPdf',pdfPayload());saveFile(res);}
+    catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');toast(isNet(m)?'No signal – can\'t make the PDF. Use Print → Save as PDF instead.':m);}});
+
+  // ---------- Dark mode ----------
+  try{if(localStorage.getItem('mayday-dark')==='1')document.body.classList.add('dark');}catch(e){}
+  $('darkToggle').checked=document.body.classList.contains('dark');
+  $('darkToggle').addEventListener('change',e=>{document.body.classList.toggle('dark',e.target.checked);try{localStorage.setItem('mayday-dark',e.target.checked?'1':'0');}catch(x){}});
+
+  // ---------- Views ----------
+  function curForm(){return kind==='ppm'?pform:form;}
+  function setMode(m){mode=m;closeTeams();const list=m==='list',edit=m==='edit',ppm=kind==='ppm',home=m==='home';
+    const sett=m==='settings';
+    $('listView').hidden=!list;$('homeView').hidden=!home;$('setView').hidden=!sett;form.hidden=list||home||sett||ppm;pform.hidden=list||home||sett||!ppm;document.querySelector('.bar').hidden=list||home||sett;
+    $('tabHome').hidden=home;renderOutbox();document.body.classList.toggle('offhome',!home);
+    document.body.classList.toggle('hubmode',USE_STEPS&&(m==='new'||edit));document.body.classList.toggle('editing',edit);
+    if(m==='new'||edit)showStep(0,true);else document.body.classList.remove('athub');
+    if(home)renderHome();
+    photoSlots();
+    partsBody.querySelectorAll('tr').forEach(tr=>{tr.hidden=m==='view'&&![...tr.querySelectorAll('input')].some(i=>i.value.trim());});
+    document.body.classList.toggle('ro',m==='view');fs.disabled=pfs.disabled=(m==='view');
+    $('viewBanner').hidden=!(m==='view'||edit);
+    $('vEmail').hidden=$('vCopy').hidden=$('vEdit').hidden=!HAS_GS||edit;
+    $('vBack').textContent=edit?'Cancel':'Back';
+    $('submitBtn').hidden=!(HAS_GS&&(m==='new'||edit));$('submitBtn').textContent=edit?'Save changes':'Save report';
+    $('addPart').hidden=true;$('draftBtn').hidden=m!=='new';
+    $('newBtn').hidden=!(m==='new'||(m==='view'&&HAS_GS));$('newBtn').querySelector('span').textContent=m==='view'?'Delete report':'Clear form';
+    $('mEmail').hidden=!HAS_GS||edit;$('mEmail').querySelector('span').textContent=m==='new'?'Save & email report…':'Email report…';
+    $('pdfBtn').hidden=!HAS_GS;$('barPdf').hidden=!(HAS_GS&&m==='view');sheet(false);roEmpty();
+    [form,pform].forEach(fm=>{const rn=fm.reportNo;rn.readOnly=(m!=='edit')&&!(m==='new'&&rn.value);rn.placeholder=m==='new'?'Auto':'';});
+    $('rnHint').hidden=(m!=='new');pform.querySelector('.rnHint').hidden=(m!=='new');
+    if(!list)requestAnimationFrame(()=>{sizePads();grow();});
+    window.scrollTo(0,0);}
+  [form,pform].forEach(fm=>fm.reportNo.addEventListener('click',()=>{const rn=fm.reportNo;if(mode==='new'&&rn.readOnly){rn.readOnly=false;rn.placeholder='Your number';rn.focus();
+    toast('Type your own report number, or leave it blank for automatic');}}));
+
+  let newVideos=[];
+  async function openReport(id){if(mode==='new'&&kind==='job'){keepCaps();newVideos=videos;}const s=reports.find(x=>x.id===id)||{};viewing=id;viewData=null;
+    kind=s.kind==='ppm'?'ppm':'job';
+    $('viewText').textContent='Loading '+(s.reportNo||'report')+'…';
+    state={photos:Array(N).fill(null),sigs:{},parts:5};setParts(5);fill({});showPhotos();videos=[];setMode('view');renderVideos();
+    try{const r=await gs('getReport',id);if(viewing!==id)return;
+      if(!r){$('viewText').textContent='Report not found';return;}
+      if(r.kind==='ppm'){kind='ppm';const f=r.fields||{};fillP(f);
+        pjobs=(f.jobs||[]).map((j,i)=>jobFromSaved(j,i,r.photos,r.photoIds,f.issuesV));
+        openK=null;setMode('view');renderJobs();viewData=r;roEmpty();$('viewText').textContent=(f.reportNo||'PPM sheet')+(r.emailedTo?' · emailed':'');return;}
+      if(kind!=='job'){kind='job';setMode('view');}
+      state={photos:(r.photos||[]).concat(Array(N).fill(null)).slice(0,N),photoIds:(r.photoIds||[]).concat(Array(N).fill(null)).slice(0,N),sigs:{},parts:r.parts||5};
+      setParts(r.parts);fill(r.fields||{});showPhotos();
+      videos=(r.videos||[]).map(v=>({id:v.id,url:v.url,cap:v.cap||'',name:'',size:0}));renderVideos();sizePads();grow();roEmpty();
+      viewData=r;
+      $('viewText').textContent=((r.fields&&r.fields.reportNo)||'Report')+(r.emailedTo?' · emailed':'');
+    }catch(e){$('viewText').textContent='Could not load report';}}
+
+  $('tabNew').addEventListener('click',()=>{if(selecting)endSelect();if(mode==='view')videos=newVideos;viewing=null;kind='job';loadDraft();setMode('new');renderVideos();});
+  $('tabPpm').addEventListener('click',()=>{if(selecting)endSelect();viewing=null;kind='ppm';loadPpmDraft();setMode('new');});
+  $('tabList').addEventListener('click',()=>{setMode('list');refresh();});
+  $('vBack').addEventListener('click',async()=>{if(mode==='edit'){if(editSnap&&editSnap.id===viewing&&!await ask('Throw away your changes to '+editSnap.no+'?','Throw away','Keep editing'))return;editDrop();openReport(viewing);return;}viewing=null;setMode('list');renderList();});
+  $('refresh').addEventListener('click',refresh);
+
+  // ---------- List ----------
+  async function refresh(){if(!HAS_GS){renderList();return;}
+    if(!reports.length)$('list').innerHTML='<p class="empty">Loading reports…</p>';
+    try{reports=await gs('listReports')||[];$('cnt').textContent=reports.length;updateClients();renderList();if(mode==='home')renderHome();}
+    catch(e){$('list').innerHTML='<p class="empty">Couldn\'t load reports – check your signal and press Refresh.</p>';}}
+  function renderList(){const el=$('list');
+    if(!HAS_GS){el.innerHTML='<p class="empty">Shared reports aren\'t available here.</p>';return;}
+    // search ignores capitals, spaces, dashes and leading zeros: "mjr 12", "MJR-0012" and "mjr12" all find MJR-0012
+    const norm=t=>String(t||'').toLowerCase().replace(/[^a-z0-9]+/g,'').replace(/\d+/g,d=>String(+d));
+    const raw=$('q').value,fc=$('fClient').value,qAll=norm(raw),words=raw.split(/\s+/).map(norm).filter(Boolean);
+    const rows=reports.filter(r=>{if(fc&&(r.client||'')!==fc)return false;if(!qAll)return true;
+      const parts=[r.reportNo,r.jobNo,r.client,r.site,r.line,r.machine,r.engineers,r.area];const hay=norm(parts.join(' ')),each=parts.map(norm).join(' ');
+      return hay.includes(qAll)||words.every(w=>each.includes(w)||hay.includes(w));});
+    if(!reports.length){el.innerHTML='<p class="empty">No reports saved yet.<br>Start one from the Home screen and press Save report.</p>';return;}
+    if(!rows.length){el.innerHTML='<p class="empty">No reports match that search.</p>';return;}
+    el.innerHTML=rows.map(r=>{const st=r.status||'';const d=r.date&&/^\d{4}-\d{2}-\d{2}$/.test(r.date)?new Date(r.date+'T00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):(r.date||'');
+      return `<button type="button" class="card${selected.has(r.id)?' sel':''}" data-id="${esc(r.id)}"><span class="tick"></span><div class="cbody"><div class="top"><span>${r.kind==='ppm'?'📋 ':''}${esc(r.reportNo||'—')} · ${esc(r.client||'No client')}</span><span class="pill ${st==='complete'?'':st||'none'}">${esc(STATUS[st]||'No status')}</span></div>
+      <div class="meta">${esc(d)}${r.kind==='ppm'?(r.site?' · '+esc(r.site):'')+(r.machine?' · '+esc(r.machine):''):(r.line?' · Line: '+esc(r.line):'')+(r.machine?' · '+esc(r.machine):'')}</div>
+      <div class="meta">${[r.jobNo?'Job '+esc(r.jobNo):'',esc(r.engineers||''),r.videos?'🎥 '+r.videos:''].filter(Boolean).join(' · ')}</div></div></button>`;}).join('');}
+  let selecting=false;const selected=new Set();
+  function updSel(){$('selCount').textContent=selected.size+' selected';$('selEmail').disabled=!selected.size;
+    $('list').querySelectorAll('.card').forEach(c=>c.classList.toggle('sel',selected.has(c.dataset.id)));}
+  function startSelect(){selecting=true;selected.clear();$('listView').classList.add('selecting');$('listBar').hidden=false;$('selBtn').hidden=true;updSel();}
+  function endSelect(){selecting=false;selected.clear();$('listView').classList.remove('selecting');$('listBar').hidden=true;$('selBtn').hidden=false;updSel();}
+  $('selBtn').addEventListener('click',startSelect);$('selCancel').addEventListener('click',endSelect);
+  $('selAll').addEventListener('click',()=>{const t=new Date().toISOString().slice(0,10);
+    reports.filter(r=>r.date===t).forEach(r=>selected.add(r.id));updSel();if(!selected.size)toast('No reports dated today');});
+  $('selEmail').addEventListener('click',()=>{if(!selected.size)return;const ids=[...selected];
+    const rs=ids.map(id=>reports.find(r=>r.id===id)).filter(Boolean);
+    const ems=[...new Set(rs.map(r=>r.clientEmail).filter(Boolean))];
+    openEmail(ids,ems.join(', '),rs.map(r=>r.reportNo).join(', '));});
+  $('list').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;
+    if(selecting){const id=c.dataset.id;selected.has(id)?selected.delete(id):selected.add(id);updSel();return;}
+    openReport(c.dataset.id);});
+  $('q').addEventListener('input',renderList);$('fClient').addEventListener('change',renderList);
+  function updateClients(){const sel=$('fClient'),cur=sel.value;const cs=[...new Set(reports.map(r=>r.client).filter(Boolean))].sort();
+    sel.innerHTML='<option value="">All clients</option>'+cs.map(c=>`<option>${esc(c)}</option>`).join('');sel.value=cs.includes(cur)?cur:'';}
+
+  // ---------- Submit ----------
+  let busy=false;
+  $('submitBtn').addEventListener('click',async()=>{if(kind==='ppm')return ppmSubmit();if(busy)return;
+    const f=collect();
+    if(!f.client&&!f.jobNo&&!f.workDone){showStep(1);toast('Fill in at least the client, job no. or work carried out');return;}
+    if(!f.status){const sb=$('statusBox');reveal(sb);sb.classList.add('missing');sb.scrollIntoView({behavior:'smooth',block:'center'});
+      toast('Pick a Job Status before submitting');return;}
+    const editing=(mode==='edit'),idleLabel=editing?'Save changes':'Save report';
+    busy=true;const btn=$('submitBtn');btn.disabled=true;btn.textContent=editing?'Saving…':'Sending…';
+    try{
+      if(f.emailNow&&f.clientEmail&&!/^[^@\s]+@[^@\s]+\.[^@\s]+/.test(f.clientEmail)){toast("Client email doesn't look right");return;}
+      keepCaps();Object.assign(f,collect());
+      if(!editing){await submitNew({id:state.subId||newSubId(),kind:'job',label:'Job report · '+[f.client,f.line,f.machine].filter(Boolean).join(' · '),
+        fields:f,parts:partsBody.children.length,emailNow:!!f.emailNow,photos:state.photos.slice(),up:state.photos.map(()=>null),
+        videos:videos.filter(v=>v.file||v.id).map(v=>({file:v.file||null,name:v.name,size:v.size,cap:v.cap||'',id:v.id||null}))},btn);return;}
+      for(let i=0;i<videos.length;i++){const v=videos[i];if(v.id||!v.file)continue;
+        btn.textContent='Uploading video '+(i+1)+'… 0%';
+        try{v.id=await uploadVideo(v,i,p=>{btn.textContent='Uploading video '+(i+1)+'… '+p+'%';});}
+        catch(err){toast('Video '+(i+1)+' failed to upload – check signal and press Save report again (photos and text are safe)');return;}}
+      btn.textContent=(editing?'Saving':'Sending')+(f.emailNow&&f.clientEmail?' & emailing…':'…');
+      const payload={fields:f,parts:partsBody.children.length,emailNow:!!f.emailNow,videoIds:videos.map(v=>v.id).filter(Boolean),
+        photos:state.photos.map((p,i)=>state.photoIds&&state.photoIds[i]?'id:'+state.photoIds[i]:p)};
+      let res;
+      if(!state.subId)state.subId=newSubId();
+      if(editing){payload.id=viewing;res=await gs('updateReport',payload);editDrop();}
+      else{payload.subId=state.subId;res=await gs('submitReport',payload);clearDraft();}
+      videos=[];
+      let msg='Report '+res.reportNo+(editing?' saved':' submitted');
+      if(!res.pdf)msg+=' – but the PDF failed';
+      else if(res.emailed)msg+=' & PDF emailed to '+res.emailed;
+      else if(res.emailError)msg+=' – email failed: '+res.emailError;
+      else msg+=' – PDF saved';
+      toast(msg+(mode==='new'?'':''));
+      await refresh();openReport(res.id);
+    }catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');
+      const net=!m||/network|HTTP 0|failed to fetch|timed? ?out|connection/i.test(m);
+      toast(net?(editing?'No signal – could not save. Try again when you have signal.':'No signal – could not send. Your draft is saved; press Save report again when you have signal.'):m);}
+    finally{busy=false;btn.disabled=false;btn.textContent=idleLabel;}
+  });
+
+  // ---------- New report → outbox → send (now, or later when there's signal) ----------
+  async function submitNew(item,btn){const wantEmail=emailAfter;emailAfter=false;item.created=Date.now();item.status='waiting';rememberLast(item);
+    let stored=true;try{await IDB.put(item);}catch(e){stored=false;}
+    if(!stored){toast('This phone won\'t let the app save offline – sending now, keep signal');}
+    else{obItems=obItems.filter(i=>i.id!==item.id).concat([item]);renderOutbox();}
+    const resetForm=()=>{if(item.kind==='ppm'){clearPpmDraft();if(mode==='new'&&kind==='ppm')loadPpmDraft();}else{clearDraft();videos=[];if(mode==='new'&&kind==='job'){loadDraft();renderVideos();}}};
+    let res=null,fail='',net=false;
+    if(stored){const r=await runOutbox({watch:item.id,step:s=>{btn.textContent=s;}});res=r.sent[item.id]||null;fail=r.failed[item.id]||'';net=!res&&!fail;}
+    else{try{res=await sendItem(item,s=>{btn.textContent=s;});}catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');if(isNet(m))net=true;else fail=m;}}
+    if(res){resetForm();
+      let msg=(item.kind==='ppm'?'PPM sheet ':'Report ')+res.reportNo+' saved';
+      if(!res.pdf)msg+=' – but the PDF failed';else if(res.emailed)msg+=' & emailed to '+res.emailed;else if(res.emailError)msg+=' – email failed: '+res.emailError;else msg+=' – PDF saved';
+      toast(msg);await refresh();await openReport(res.id);
+      if(wantEmail&&!res.emailed&&viewing===res.id&&viewData)$('vEmail').click();return;}
+    if(fail){if(stored){await IDB.rm(item.id).catch(()=>{});obItems=obItems.filter(i=>i.id!==item.id);renderOutbox();}
+      toast(fail);return;}                      // e.g. report number already used – the form is still here to fix
+    if(stored){resetForm();if(mode==='new'){viewing=null;setMode('home');}toast('📶 No signal – saved in the outbox on this phone. It will send by itself when you get signal.'+(wantEmail?' Email it from All reports once it has gone.':''));window.scrollTo(0,0);}
+    else toast('No signal – could not send. Your draft is still here; press Save report again when you have signal.');}
+  // a report that couldn't send (e.g. number already used) goes back to being a draft to fix
+  async function outboxToDraft(it){if(!await okToReplaceDraft(it.kind==='ppm'?'ppm':'job'))return;
+    if(it.kind==='ppm'){clearPpmDraft();const f=it.fields||{};const ph=it.photos||[];
+      const d={fields:Object.assign({},f,{jobs:undefined}),jobs:(f.jobs||[]).map((j,i)=>{const nj=jobFromSaved(j,i,ph,null,f.issuesV);return {wo:nj.wo,asset:nj.asset,motor:nj.motor,issues:nj.issues.map(x=>({text:x.text,photos:x.photos}))};}),subId:newSubId()};
+      try{localStorage.setItem(PPMKEY,JSON.stringify(d));}catch(e){}await IDB.set('draft-ppm',{subId:d.subId,photos:d.jobs.map(j=>j.issues.map(x=>x.photos))}).catch(()=>{});
+      await IDB.rm(it.id).catch(()=>{});obItems=obItems.filter(i=>i!==it);renderOutbox();
+      viewing=null;kind='ppm';loadPpmDraft();setMode('new');}
+    else{clearDraft();const d={fields:it.fields,photos:it.photos,parts:it.parts,subId:newSubId()};
+      try{localStorage.setItem(KEY,JSON.stringify(Object.assign({},d,{photos:Array(N).fill(null)})));}catch(e){}
+      await IDB.set('draft-job',{subId:d.subId,photos:it.photos,videos:(it.videos||[]).filter(v=>v.file)}).catch(()=>{});
+      await IDB.rm(it.id).catch(()=>{});obItems=obItems.filter(i=>i!==it);renderOutbox();
+      viewing=null;kind='job';videos=[];loadDraft();setMode('new');}
+    $('outbox').classList.remove('openp');toast('Back in the form – fix it and press Save report again');}
+
+  // ---------- Edit a submitted report ----------
+  $('vEdit').addEventListener('click',async()=>{if(!viewData){toast('Still loading – try again in a moment');return;}
+    if(editSnap&&editSnap.id!==viewing&&!await ask('You have unsaved changes to '+editSnap.no+'. Throw them away and edit this report instead?','Throw away','Keep them'))return;
+    if(editSnap&&editSnap.id!==viewing)editDrop();
+    curForm().emailNow.checked=false;setMode('edit');if(kind==='ppm'){openK=null;renderJobs();}else renderVideos();
+    $('viewText').textContent='Editing '+((viewData.fields&&viewData.fields.reportNo)||'report');});
+
+  // ---------- Copy to new (next job, same details) ----------
+  const CARRY=['date','engineers','teamTicked','teamOther','client','site','contact','area','line','completedBy','clientEmail','emailNow','tStart','tFinish'];
+  $('vCopy').addEventListener('click',async()=>{if(!viewData){toast('Still loading – try again in a moment');return;}
+    if(!await okToReplaceDraft(kind))return;
+    const src=viewData.fields||{},f={};CARRY.forEach(k=>{if(src[k]!==undefined)f[k]=src[k];});
+    if(kind==='ppm'){['permit','permitWriter','area'].forEach(k=>{if(src[k]!==undefined)f[k]=src[k];});
+      viewing=null;clearPpmDraft();mode='new';psubId=newSubId();fillP(f);pjobs=(src.jobs||[]).map(j=>newJob({wo:j.wo,asset:j.asset||j.line,motor:j.motor||j.machine}));openK=null;
+      setMode('new');renderJobs();psave();toast('New PPM sheet started – same client, team and inspections. Add any issues found.');return;}
+    viewing=null;clearDraft();mode='new';state={photos:Array(N).fill(null),sigs:{},parts:7,subId:newSubId()};setParts(7);fill(f);showPhotos();
+    videos=[];newVideos=[];setMode('new');renderVideos();save();
+    toast('New report started – same client, line, team and date. Check and change anything that\'s different.');});
+
+  // ---------- Email PDF (view mode) ----------
+  const em=$('emailModal');
+  let emailIds=[];
+  let eDraft=null;
+  function openEmail(ids,to,prev){emailIds=ids;eDraft=null;$('emailTitle').textContent=ids.length>1?'Email '+ids.length+' reports in one email':'Email report';
+    $('emailTo').value=to||'';$('emailPrev').textContent=prev||'';$('emailReset').hidden=true;
+    $('emailSubj').value='';$('emailBody').value='Loading the email…';$('emailSubj').disabled=$('emailBody').disabled=true;$('eSend').disabled=true;
+    em.classList.add('show');if(!to)setTimeout(()=>$('emailTo').focus(),50);
+    gs('emailDraft',ids).then(d=>{if(emailIds!==ids)return;eDraft=d;$('emailSubj').value=d.subject;$('emailBody').value=d.body;requestAnimationFrame(()=>{const t=$('emailSubj');t.style.height='auto';t.style.height=(t.scrollHeight+2)+'px';});}).catch(e=>{if(emailIds!==ids)return;
+      $('emailBody').value='';toast(isNet(errMsg(e))?'No signal – write your message, it sends when you press Send with signal':errMsg(e));})
+      .finally(()=>{if(emailIds!==ids)return;$('emailSubj').disabled=$('emailBody').disabled=false;$('eSend').disabled=false;});}
+  const eChanged=()=>{$('emailReset').hidden=!eDraft||($('emailSubj').value===eDraft.subject&&$('emailBody').value===eDraft.body);};
+  $('emailSubj').addEventListener('input',eChanged);$('emailBody').addEventListener('input',eChanged);
+  $('emailReset').addEventListener('click',()=>{if(!eDraft)return;$('emailSubj').value=eDraft.subject;$('emailBody').value=eDraft.body;eChanged();});
+  $('vEmail').addEventListener('click',()=>{if(!viewData){toast('Still loading – try again in a moment');return;}
+    openEmail([viewing],(viewData.fields&&viewData.fields.clientEmail)||'',viewData.emailedTo?'Already sent to: '+viewData.emailedTo.replace(/\n/g,'; '):'');});
+  $('eCancel').addEventListener('click',()=>em.classList.remove('show'));
+  $('eSend').addEventListener('click',async()=>{const to=$('emailTo').value.trim();if(!to){toast('Enter an email address');return;}
+    const b=$('eSend');b.disabled=true;b.textContent='Sending…';
+    try{const r=await gs('emailReports',emailIds,to,{subject:$('emailSubj').value,body:$('emailBody').value});em.classList.remove('show');
+      toast((r.count>1?r.count+' reports':'PDF')+' emailed to '+r.to);
+      if(viewData&&emailIds.length===1&&emailIds[0]===viewing)viewData.emailedTo=(viewData.emailedTo?viewData.emailedTo+'\n':'')+r.to;
+      if(selecting)endSelect();}
+    catch(e){toast('Email failed: '+((e&&e.message)||e));}
+    finally{b.disabled=false;b.textContent='Send';}});
+
+  // ---------- Clear ----------
+  const modal=$('modal');
+  let delMode=false;
+  $('newBtn').addEventListener('click',()=>{delMode=(mode==='view');
+    const no=viewData&&viewData.fields&&viewData.fields.reportNo;
+    $('mText').textContent=delMode?'Delete '+(no||'this report')+' for everyone? Its photos, videos and PDF go to the Google Drive bin (recoverable for 30 days).':(kind==='ppm'?'Clear this PPM sheet and start a new blank one?':'Clear this report and start a new blank one?');
+    $('mOk').textContent=delMode?'Delete':'Clear';$('adminRow').hidden=true;$('adminPin').value='';$('mErr').textContent='';
+    modal.classList.add('show');});
+  $('mCancel').addEventListener('click',()=>modal.classList.remove('show'));
+  $('mOk').addEventListener('click',async()=>{
+    if(!delMode){modal.classList.remove('show');if(kind==='ppm'){clearPpmDraft();loadPpmDraft();toast('New blank PPM sheet');return;}clearDraft();videos=[];renderVideos();loadDraft();sizePads();toast('New blank report');return;}
+    const b=$('mOk');b.disabled=true;b.textContent='Deleting…';
+    try{const r=await gs('deleteReport',viewing,$('adminPin').value.trim());modal.classList.remove('show');
+      toast('Report '+r.deleted+' deleted');viewing=null;viewData=null;setMode('list');await refresh();}
+    catch(e){const m=errMsg(e).replace(/^Error:\s*/,'');
+      if(/ADMIN_PIN_REQUIRED/.test(m)){$('adminRow').hidden=false;$('mErr').textContent='Enter the manager PIN to delete.';$('adminPin').focus();}
+      else $('mErr').textContent=m||'Could not delete';}
+    finally{b.disabled=false;b.textContent='Delete';}});
+
+  // ---------- Print ----------
+  $('addPart').addEventListener('click',()=>{if(kind==='ppm'){if(step!==2)showStep(2,true);addJob();return;}
+    if(step!==3&&document.body.classList.contains('hubmode'))showStep(3,true);addPartRow();save();const r=partsBody.lastElementChild;r.scrollIntoView({behavior:'smooth',block:'center'});r.querySelector('input').focus();});
+  $('addPartIn').addEventListener('click',()=>{addPartRow();save();const r=partsBody.lastElementChild;r.querySelector('input').focus();});
+  document.addEventListener('click',e=>{if(e.target.closest('[data-clear]')&&mode==='new')$('newBtn').click();});
+  $('printBtn').addEventListener('click',()=>{grow();try{window.print();}catch(e){}});
+  window.addEventListener('beforeprint',grow);
+
+  // ---------- Second Submit button at the end of the form (always reachable by scrolling) ----------
+  const sb1=$('submitBtn'),sb2=$('submitBtn2');
+  const sb3=$('submitBtn3');
+  const mirror=()=>{[sb2,sb3].forEach(b=>{b.hidden=sb1.hidden;b.disabled=sb1.disabled;b.textContent=sb1.textContent;});};
+  new MutationObserver(mirror).observe(sb1,{attributes:true,childList:true,characterData:true,subtree:true});
+  sb2.addEventListener('click',()=>sb1.click());sb3.addEventListener('click',()=>sb1.click());
+
+  // tapping anywhere in a box (label included) puts the cursor in its field
+  document.addEventListener('click',e=>{const f=e.target.closest('.f');if(!f||e.target.closest('input,select,textarea,button,label,.team,.checks,.sig'))return;
+    const el=f.querySelector('input:not([type=hidden]):not([type=checkbox]):not([type=radio]),select,textarea');if(el&&!el.disabled&&!el.readOnly)el.focus();});
+
+  // ---------- Start ----------
+  // save drafts straight away if the phone switches app or locks
+  const flush=()=>{if(mode==='edit'){if(editT||editDirty)editSave(true);return;}if(mode!=='new')return;if(kind==='ppm'){if(psaveT)psave(true);}else if(saveT)save(true);};   // save straight away, not on a timer
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush();});
+  window.addEventListener('pagehide',flush);
+  function startData(){refresh();loadWorkers();loadOutbox().then(()=>{if(obItems.length)runOutbox();});}
+  $('pinForm').addEventListener('submit',e=>{e.preventDefault();const p=$('pinInput').value.trim();if(p)tryPin(p);});
+  loadPpmDraft();loadDraft();setMode('home');loadOutbox();
+  if(!HAS_GS)$('offline').hidden=false;
+  else if(!PIN)showPin('');
+  else gsRaw('checkPin',PIN).then(startData).catch(e=>{if(/WRONG_PIN/.test(errMsg(e))){try{localStorage.removeItem(PKEY);}catch(x){}showPin('The team PIN has changed. Enter the new one.');}else startData();});
+  let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(sizePads,150);});
+})();
+</script>
+</body>
+</html>
